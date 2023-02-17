@@ -1,0 +1,319 @@
+@import "~office-ui-fabric-react/dist/sass/References.scss";
+
+.projects {
+  .btnApprovedForReviewerGreen{
+    background-color: #49e90ad0 ;
+    color: black;
+  }
+  .container {
+    width: 100%;
+    // margin: 0px auto;
+    // box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .logoImg {
+    background-image: url("../../../assets/performancemgmtgraphic.png");
+    height: 85px;
+    background-repeat: no-repeat;
+    width: 100%;
+    background-position: center;
+  }
+
+  .row {
+    @include ms-Grid-row;
+    // background-color: $ms-color-themeDark;
+    // padding: 5px;
+    align-items: center;
+  }
+  .rowHeader {
+    @include ms-Grid-row;
+    background-color: $ms-color-themeDark;
+    // padding: 5px;
+    font-weight: bold;
+    margin: 0px !important;
+  }
+
+  .column {
+    @include ms-Grid-col;
+    @include ms-lg10;
+    @include ms-xl8;
+    @include ms-xlPush2;
+    @include ms-lgPush1;
+  }
+
+  .colHeader100 {
+    width: 100%;
+    padding: 3px;
+    text-align: center;
+  }
+
+  .col100 {
+    width: 99%;
+    padding: 6px;
+  }
+
+  .col100right {
+    width: 99%;
+    padding: 6px;
+    text-align: right;
+  }
+
+  .floatRight {
+    float: right;
+  }
+
+  .tablewraper {
+    width: 99%;
+    padding: 3px;
+    align-items: center;
+
+    table,
+    td,
+    th {
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+  }
+
+  .boldlabel {
+    font-weight: 600;
+  }
+
+  .normalLabel {
+    font-weight: 400;
+  }
+
+  .highlightedInstruction{
+    color: red;
+    text-align: center;
+    font-size: 16px;
+    padding: 25px 0px 0px 15px;
+  }
+
+  .inRed{
+    color:red;
+  }
+
+  .mt5{
+    margin-top: 5px;
+  }
+
+  .col25Right {
+    width: 25%;
+    padding: 3px;
+    text-align: right;
+    @include ms-Grid-col;
+  }
+  .col25left {
+    width: 25%;
+    padding: 3px;
+    @include ms-Grid-col;
+
+    //  float:left
+  }
+  .col50left {
+    width: 50%;
+    padding: 3px;
+    @include ms-Grid-col;
+
+    //  float:left
+  }
+
+  .col50right {
+    width: 50%;
+    padding: 3px;
+    @include ms-Grid-col;
+    text-align: right;
+  }
+
+  .col75left {
+    width: 75%;
+    padding: 3px;
+    @include ms-Grid-col;
+  }
+
+  .col75right {
+    width: 75%;
+    padding: 3px;
+    @include ms-Grid-col;
+    text-align: right;
+  }
+
+  .col80left {
+    width: 79%;
+    padding: 3px;
+    @include ms-Grid-col;
+
+    //  float:left
+  }
+  .col20left {
+    width: 20%;
+    padding: 3px;
+    @include ms-Grid-col;
+
+    //  float:left
+  }
+  .col35left {
+    width: 35%;
+    padding: 3px;
+    @include ms-Grid-col;
+
+    //  float:left
+  }
+
+  .col33left {
+    width: 33%;
+    padding: 3px;
+    @include ms-Grid-col;
+
+    //  float:left
+  }
+  .col15left {
+    width: 15%;
+    padding: 3px;
+    @include ms-Grid-col;
+    //  float:left
+  }
+
+  .col10left {
+    width: 10%;
+    padding: 3px;
+    @include ms-Grid-col;
+    //  float:left
+  }
+
+  .title {
+    @include ms-font-xl;
+    @include ms-fontColor-white;
+    font-weight: bold;
+  }
+
+  .subTitle {
+    @include ms-font-l;
+    @include ms-fontColor-white;
+    font-weight: normal;
+  }
+
+  .description {
+    @include ms-font-l;
+    @include ms-fontColor-white;
+  }
+
+  .button {
+    // Our button
+    text-decoration: none;
+    height: 32px;
+
+    // Primary Button
+    min-width: 80px;
+    background-color: $ms-color-themePrimary;
+    border-color: $ms-color-themePrimary;
+    color: $ms-color-white;
+
+    // Basic Button
+    outline: transparent;
+    position: relative;
+    font-family: "Segoe UI WestEuropean", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue",
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: $ms-font-size-m;
+    font-weight: $ms-font-weight-regular;
+    border-width: 0;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 16px;
+
+    .label {
+      font-weight: $ms-font-weight-semibold;
+      font-size: $ms-font-size-m;
+      height: 32px;
+      line-height: 32px;
+      margin: 0 4px;
+      vertical-align: top;
+      display: inline-block;
+    }
+  }
+
+  .stackCenter {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sectionContainer {
+    margin-bottom: 10px;
+    @include ms-depth-8;
+
+    .sectionHeader {
+      @include ms-Grid-row;
+      background-color: "[theme: themePrimary]";
+      // padding: 5px;
+      font-weight: bold;
+      margin: 0px !important;
+    }
+
+    .sectionNotes {
+      font-size: 14px;
+      font-weight: normal;
+      font-style: italic;
+      margin: 10px 10px 0px 10px;
+      //background-color: #deecf9;
+      
+      p{
+        padding: 10px;
+        margin: 0px;
+      }
+    }
+
+    .sectionContent {
+      padding: 10px;
+    }
+  }
+
+  .AddPageBreak{
+    page-break-before: always;
+  }
+
+  .whiteBackground {
+    background-color: white;
+  }
+
+  textarea {
+    height: 79px;
+  }
+
+  .Spacer{
+    min-height: 20px;
+  }
+
+  .SpacerSmall{
+    max-height: 8px;
+  }
+  .ratingtable {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+
+    td,
+    th {
+      border: 1px solid #ddd;
+      text-align: left;
+      padding: 3px 10px;
+      font-weight: 500;
+      font-size: 13.5px;
+    }
+
+    //  margin-left: 10px;
+    .colsrno {
+      width: 10%;
+      text-align: center;
+    }
+    .colDetailedDescription {
+      width: 90%;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+@import "~office-ui-fabric-react/dist/sass/References.scss";
+
+/* This file is for handling the css objects which are not generated from the code */
+/* Modifying Microsoft generated classes */
+
+.ms-TextField-fieldGroup,
+.ms-BasePicker-text,
+.ms-Button,
+.ms-Dropdown-title {
+   border-radius: 10px;
+}
