@@ -972,55 +972,85 @@ export default class Projects extends React.Component<
                   <div className={styles.sectionContent}>
                     <div className={styles.row}>
                       <div className={styles.col50left}>
-                        <b>Reviewee: </b>{" "}
+                        <div className={styles.lblLeftTitle}>Reviewee : </div>{" "}
                         {this.state.ProjectDetails.Reviewee.Title}
                       </div>
-                      <div className={styles.col10left}>
-                        <b>Fiscal Year: </b>
-                      </div>
-                      <div className={styles.col25left}>
-                        <Dropdown
-                          placeholder="Select Fiscal Year"
-                          options={fiscalYearOptions}
-                          selectedKey={this.state.ProjectDetails.FiscalYear}
-                          onChange={(e, selectedOption) => {
-                            this.onChangeDropdownValues(
-                              "FiscalYear",
-                              selectedOption.text
-                            );
+                      <div
+                        className={styles.col50left}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <div className={styles.lblRightTitle}>
+                          Fiscal Year :{" "}
+                        </div>
+                        <div
+                          style={{
+                            width: "40%",
                           }}
-                        />
+                        >
+                          <Dropdown
+                            placeholder="Select Fiscal Year"
+                            options={fiscalYearOptions}
+                            selectedKey={this.state.ProjectDetails.FiscalYear}
+                            onChange={(e, selectedOption) => {
+                              this.onChangeDropdownValues(
+                                "FiscalYear",
+                                selectedOption.text
+                              );
+                            }}
+                          />
+                        </div>
                       </div>
                     </div>
                     <div className={styles.row}>
                       <div className={styles.col50left}>
-                        <b>Project Name:</b>{" "}
+                        <div className={styles.lblLeftTitle}>
+                          Project Name :
+                        </div>{" "}
                         {this.state.ProjectDetails.ProjectName}
                       </div>
-                      <div className={styles.col10left}>
-                        <b>Service Line:</b>
-                      </div>
-                      <div className={styles.col25left}>
-                        <Dropdown
-                          placeholder="Select Service line"
-                          options={serviceLineOptions}
-                          selectedKey={this.state.ProjectDetails.ServiceLine}
-                          onChange={(e, selectedOption) => {
-                            this.onChangeDropdownValues(
-                              "ServiceLine",
-                              selectedOption.text
-                            );
+                      <div
+                        className={styles.col50left}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <div className={styles.lblRightTitle}>
+                          Service Line :
+                        </div>
+                        <div
+                          style={{
+                            width: "40%",
                           }}
-                        />
+                        >
+                          <Dropdown
+                            placeholder="Select Service line"
+                            options={serviceLineOptions}
+                            selectedKey={this.state.ProjectDetails.ServiceLine}
+                            onChange={(e, selectedOption) => {
+                              this.onChangeDropdownValues(
+                                "ServiceLine",
+                                selectedOption.text
+                              );
+                            }}
+                          />
+                        </div>
                       </div>
                     </div>
                     <div className={styles.row}>
                       <div className={styles.col50left}>
-                        <b>Project Code:</b>{" "}
+                        <div className={styles.lblLeftTitle}>
+                          Project Code :
+                        </div>{" "}
                         {this.state.ProjectDetails.ProjectCode}
                       </div>
                       <div className={styles.col50left}>
-                        <b>Performance Period:</b>{" "}
+                        <div className={styles.lblRightTitle}>
+                          Performance Period :
+                        </div>{" "}
                         {this.state.ProjectDetails.ProjectStartDateFormatted} -{" "}
                         {this.state.ProjectDetails.ProjectEndDateFormatted}
                       </div>
@@ -1028,21 +1058,25 @@ export default class Projects extends React.Component<
                     <div className={styles.SpacerSmall}>&nbsp;</div>
                     <div className={styles.row}>
                       <div className={styles.col50left}>
-                        <b>Client: </b> {this.state.ProjectDetails.ClientName}
+                        <div className={styles.lblLeftTitle}>Client :</div>{" "}
+                        {this.state.ProjectDetails.ClientName}
                       </div>
                       <div className={styles.col50left}>
-                        <b>Hours Worked: </b>{" "}
+                        <div className={styles.lblRightTitle}>
+                          Hours Worked :
+                        </div>{" "}
                         {this.state.ProjectDetails.HoursWorked}
                       </div>
                     </div>
                     <div className={styles.SpacerSmall}>&nbsp;</div>
                     <div className={styles.row}>
                       <div className={styles.col50left}>
-                        <b>Home Office:</b>{" "}
+                        <div className={styles.lblLeftTitle}>Home Office :</div>{" "}
                         {this.state.ProjectDetails.HomeOffice}
                       </div>
                       <div className={styles.col50left}>
-                        <b>Job Role:</b> {this.state.ProjectDetails.JobTitle}
+                        <div className={styles.lblRightTitle}>Job Role :</div>{" "}
+                        {this.state.ProjectDetails.JobTitle}
                       </div>
                     </div>
                     <div className={styles.Spacer}>&nbsp;</div>
@@ -1100,7 +1134,8 @@ export default class Projects extends React.Component<
                       <div className={styles.row}>
                         <div className={styles.col25left}>
                           <label>
-                            Reviewer <span className={styles.inRed}>*</span>
+                            <b>Reviewer </b>
+                            <span className={styles.inRed}>*</span>
                           </label>
                           <PeoplePicker
                             context={this.props.AppContext as any}
@@ -1122,7 +1157,8 @@ export default class Projects extends React.Component<
                         </div>
                         <div className={styles.col25left}>
                           <label>
-                            Lead MD <span className={styles.inRed}>*</span>
+                            <b>Lead MD </b>
+                            <span className={styles.inRed}>*</span>
                           </label>
                           <PeoplePicker
                             context={this.props.AppContext as any}
@@ -1189,50 +1225,64 @@ export default class Projects extends React.Component<
                   <div className={styles.sectionContent}>
                     <div className={styles.row}>
                       <div className={styles.col50left}>
-                        <b>Reviewee: </b>{" "}
+                        <div className={styles.lblLeftTitle}>Reviewee : </div>{" "}
                         {this.state.ProjectDetails.Reviewee.Title}
                       </div>
                       <div className={styles.col50left}>
-                        <b>Performance Period:</b>{" "}
+                        <div className={styles.lblRightTitle}>
+                          Performance Period :
+                        </div>{" "}
                         {this.state.ProjectDetails.ProjectStartDateFormatted} -{" "}
                         {this.state.ProjectDetails.ProjectEndDateFormatted}
                       </div>
                     </div>
                     <div className={styles.row}>
                       <div className={styles.col50left}>
-                        <b>Home Office:</b>{" "}
+                        <div className={styles.lblLeftTitle}>Home Office :</div>{" "}
                         {this.state.ProjectDetails.HomeOffice}
                       </div>
                       <div className={styles.col50left}>
-                        <b>Job Role:</b> {this.state.ProjectDetails.JobTitle}
+                        <div className={styles.lblRightTitle}>Job Role :</div>{" "}
+                        {this.state.ProjectDetails.JobTitle}
                       </div>
                     </div>
                     <div className={styles.row}>
                       <div className={styles.col50left}>
-                        <b>Project Name:</b>{" "}
+                        <div className={styles.lblLeftTitle}>
+                          Project Name :
+                        </div>{" "}
                         {this.state.ProjectDetails.ProjectName}
                       </div>
                       <div className={styles.col50left}>
-                        <b>Date Review Originated:</b>{" "}
+                        <div className={styles.lblRightTitle}>
+                          Date Review Originated :
+                        </div>{" "}
                         {this.state.ProjectDetails.DateOriginatedFormatted}
                       </div>
                     </div>
                     <div className={styles.row}>
                       <div className={styles.col50left}>
-                        <b>Client: </b> {this.state.ProjectDetails.ClientName}
+                        <div className={styles.lblLeftTitle}>Client : </div>{" "}
+                        {this.state.ProjectDetails.ClientName}
                       </div>
                       <div className={styles.col50left}>
-                        <b>Date Review Completed:</b>{" "}
+                        <div className={styles.lblRightTitle}>
+                          Date Review Completed :
+                        </div>{" "}
                         {this.state.ProjectDetails.DateReviewCompletedFormatted}
                       </div>
                     </div>
                     <div className={styles.row}>
                       <div className={styles.col50left}>
-                        <b>Fiscal Year: </b>{" "}
+                        <div className={styles.lblLeftTitle}>
+                          Fiscal Year :{" "}
+                        </div>{" "}
                         {this.state.ProjectDetails.FiscalYear}
                       </div>
                       <div className={styles.col50left}>
-                        <b>Service Line:</b>{" "}
+                        <div className={styles.lblRightTitle}>
+                          Service Line :
+                        </div>{" "}
                         {this.state.ProjectDetails.ServiceLine}
                       </div>
                     </div>
@@ -1251,7 +1301,9 @@ export default class Projects extends React.Component<
                     </div>
                     <div className={styles.Spacer}>&nbsp;</div>
                     <div className={styles.row}>
-                      <div className={styles.col10left}>Hours worked:</div>
+                      <div className={styles.col10left}>
+                        <b>Hours worked :</b>
+                      </div>
                       <div className={styles.col25left}>
                         <TextField
                           value={
@@ -1268,7 +1320,8 @@ export default class Projects extends React.Component<
                     </div>
                     <div className={styles.row}>
                       <div className={styles.col10left}>
-                        Complexity: <span className={styles.inRed}>*</span>
+                        <b>Complexity :</b>{" "}
+                        <span className={styles.inRed}>*</span>
                       </div>
                       <div className={styles.col25left}>
                         <Dropdown
@@ -1299,7 +1352,9 @@ export default class Projects extends React.Component<
                             Config.Strings.Status_Acknowledged) && (
                           <React.Fragment>
                             <div className={styles.col25left}>
-                              <label>Reviewer:</label>
+                              <label>
+                                <b>Reviewer :</b>
+                              </label>
                               <PeoplePicker
                                 context={this.props.AppContext as any}
                                 personSelectionLimit={1}
@@ -1317,7 +1372,9 @@ export default class Projects extends React.Component<
                               />
                             </div>
                             <div className={styles.col25left}>
-                              <label>Lead MD:</label>
+                              <label>
+                                <b>Lead MD :</b>
+                              </label>
                               <PeoplePicker
                                 context={this.props.AppContext as any}
                                 personSelectionLimit={1}
@@ -1351,7 +1408,9 @@ export default class Projects extends React.Component<
                           }
                         ></div>
                         <div className={styles.col25left}>
-                          <label>Review Status:</label>
+                          <label>
+                            <b>Review Status :</b>
+                          </label>
                           <br />
                           <TextField
                             disabled={true}

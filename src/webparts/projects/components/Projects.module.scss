@@ -274,4 +274,18 @@
             width: 90%;
         }
     }
+    .lblLeftTitle {
+        display: inline-block;
+        width: 20%;
+        text-align: end;
+        font-weight: bold;
+        margin-right: 15px;
+    }
+    .lblRightTitle {
+        display: inline-block;
+        width: 30%;
+        text-align: end;
+        font-weight: bold;
+        margin-right: 15px;
+    }
 }
