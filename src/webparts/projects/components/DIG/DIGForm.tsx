@@ -957,9 +957,9 @@ export default class DIGForm extends React.Component<
                 <div className={styles.col100}>
                   <Label>
                     Briefly comment on the Reviewee's top areas of strong
-                    performance on this project. Your comments should support,
-                    at minimum, any 4 ratings above.{" "}
-                    <i>(Commentary required)</i>
+                    performance on this project and following the RDTA
+                    principles. Your comments should support, at minimum, any 4
+                    ratings above. <i>(Commentary required)</i>
                   </Label>
                   <TextField
                     resizable={false}
@@ -982,9 +982,9 @@ export default class DIGForm extends React.Component<
               <div className={styles.row}>
                 <div className={styles.col100}>
                   <Label>
-                    Briefly comment on the Reviewee's top areas for development.
-                    Your comments should support, at minimum, any 1 rating
-                    above. <i>(Commentary required)</i>
+                    Briefly comment on the Reviewee's top areas for development
+                    with the RDTA principles. Your comments should support, at
+                    minimum, any 1 rating above. <i>(Commentary required)</i>
                   </Label>
                   <TextField
                     resizable={false}
@@ -1007,7 +1007,7 @@ export default class DIGForm extends React.Component<
               <div className={styles.row}>
                 <div className={styles.col100}>
                   <Label>
-                    Briefly comment on what skills are necessary for the
+                    Briefly comment on what RDTA skills are necessary for the
                     reviewee to continue to develop in order to progress in
                     their career. <i>(Commentary required)</i>
                   </Label>

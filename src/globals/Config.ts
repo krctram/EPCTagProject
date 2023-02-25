@@ -143,6 +143,25 @@ export namespace Config {
     Q16Category: "Q16Category",
     Q17Category: "Q17Category",
     Q18Category: "Q18Category",
+
+    Q1IsRating: "Q1IsRating",
+    Q2IsRating: "Q2IsRating",
+    Q3IsRating: "Q3IsRating",
+    Q4IsRating: "Q4IsRating",
+    Q5IsRating: "Q5IsRating",
+    Q6IsRating: "Q6IsRating",
+    Q7IsRating: "Q7IsRating",
+    Q8IsRating: "Q8IsRating",
+    Q9IsRating: "Q9IsRating",
+    Q10IsRating: "Q10IsRating",
+    Q11IsRating: "Q11IsRating",
+    Q12IsRating: "Q12IsRating",
+    Q13IsRating: "Q13IsRating",
+    Q14IsRating: "Q14IsRating",
+    Q15IsRating: "Q15IsRating",
+    Q16IsRating: "Q16IsRating",
+    Q17IsRating: "Q17IsRating",
+    Q18IsRating: "Q18IsRating",
   };
 
   // Key Value pair of Mentor list column title and internal names

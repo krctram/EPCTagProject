@@ -143,33 +143,37 @@ export default class Projects extends React.Component<
       this.props.AppContext,
       Config.ListNames.QuestionText
     );
-    const questionDetails: TAG_QuestionText =
-      await this.listItemService.getItemsUsingCAML(
-        [],
-        undefined,
-        camlFilterConditions,
-        1,
-        Enums.ItemResultType.TAG_QuestionText
-      );
+    let questionDetails = await this.listItemService.getItemsUsingCAML(
+      [],
+      undefined,
+      camlFilterConditions,
+      100,
+      Enums.ItemResultType.TAG_QuestionText
+    );
+    questionDetails = questionDetails.filter((arr) => {
+      return arr.ServiceLine == data.ServiceLine;
+    });
     if (questionDetails) {
       QuestionArr.map((i) => {
         tempProject["Q" + i + "Category"] =
           questionDetails[0]["Q" + i + "Category"];
 
-        if (
-          Number(tempProject["Q" + i]) > 0 ||
-          tempProject["Q" + i] == "N/A" ||
-          tempProject["Q" + i] == ""
-        ) {
-          tempProject["Q" + i + "ChoiceType"] = true;
+        if (questionDetails[0]["Q" + i + "IsRating"] == "Yes") {
+          tempProject["Q" + i + "IsRating"] = true;
         } else {
-          tempProject["Q" + i + "ChoiceType"] = false;
+          tempProject["Q" + i + "IsRating"] = false;
         }
+
+        // if (
+        //   Number(tempProject["Q" + i]) > 0 ||
+        //   tempProject["Q" + i] == "N/A" ||
+        //   tempProject["Q" + i] == ""
+        // ) {
+        //   tempProject["Q" + i + "IsRating"] = true;
+        // } else {
+        //   tempProject["Q" + i + "IsRating"] = false;
+        // }
       });
-      // for (let i = 1; i <= QuestionArr.length; i++) {
-      //   tempProject["Q" + i + "Category"] =
-      //     questionDetails[0]["Q" + i + "Category"];
-      // }
 
       this.setState({
         IsLoading: false,
@@ -215,7 +219,7 @@ export default class Projects extends React.Component<
                     </div>
                   </div>
                   <div className={styles.col20left}>
-                    <div>
+                    {/* <div>
                       <Toggle
                         label={
                           <div
@@ -232,25 +236,22 @@ export default class Projects extends React.Component<
                         disabled={!this.state.OnlyEnableForReviewer}
                         inlineLabel
                         checked={
-                          this.state.ProjectDetails["Q" + i + "ChoiceType"]
+                          this.state.ProjectDetails["Q" + i + "IsRating"]
                         }
                         style={{ transform: "translateX(100px)" }}
                         onChange={() => {
                           this.onChangeToggleValues(
-                            "Q" + i + "ChoiceType",
-                            !this.state.ProjectDetails["Q" + i + "ChoiceType"]
+                            "Q" + i + "IsRating",
+                            !this.state.ProjectDetails["Q" + i + "IsRating"]
                           );
                         }}
                       />
-                    </div>
+                    </div> */}
                     <div className={styles.Spacer}>&nbsp;</div>
                     <Dropdown
                       placeholder="Select"
                       options={
-                        // "Q" + i == "Q7" || "Q" + i == "Q12"
-                        //   ? question7Choices
-                        //   : questionChoices
-                        this.state.ProjectDetails["Q" + i + "ChoiceType"]
+                        this.state.ProjectDetails["Q" + i + "IsRating"]
                           ? questionChoices
                           : question7Choices
                       }
@@ -682,6 +683,25 @@ export default class Projects extends React.Component<
       Q16Category: "",
       Q17Category: "",
       Q18Category: "",
+
+      Q1IsRating: false,
+      Q2IsRating: false,
+      Q3IsRating: false,
+      Q4IsRating: false,
+      Q5IsRating: false,
+      Q6IsRating: false,
+      Q7IsRating: false,
+      Q8IsRating: false,
+      Q9IsRating: false,
+      Q10IsRating: false,
+      Q11IsRating: false,
+      Q12IsRating: false,
+      Q13IsRating: false,
+      Q14IsRating: false,
+      Q15IsRating: false,
+      Q16IsRating: false,
+      Q17IsRating: false,
+      Q18IsRating: false,
     };
 
     return details;
@@ -1849,9 +1869,10 @@ export default class Projects extends React.Component<
                               <div className={styles.col100}>
                                 <Label>
                                   Briefly comment on the Reviewee's top areas of
-                                  strong performance on this project. Your
-                                  comments should support, at minimum, any 4
-                                  ratings above. <i>(Commentary required)</i>
+                                  strong performance on this project and
+                                  following the RDTA principles. Your comments
+                                  should support, at minimum, any 4 ratings
+                                  above. <i>(Commentary required)</i>
                                 </Label>
                                 <TextField
                                   resizable={false}
@@ -1881,9 +1902,9 @@ export default class Projects extends React.Component<
                               <div className={styles.col100}>
                                 <Label>
                                   Briefly comment on the Reviewee's top areas
-                                  for development. Your comments should support,
-                                  at minimum, any 1 rating above.{" "}
-                                  <i>(Commentary required)</i>
+                                  for development with the RDTA principles. Your
+                                  comments should support, at minimum, any 1
+                                  rating above. <i>(Commentary required)</i>
                                 </Label>
                                 <TextField
                                   resizable={false}
@@ -1912,9 +1933,9 @@ export default class Projects extends React.Component<
                             <div className={styles.row}>
                               <div className={styles.col100}>
                                 <Label>
-                                  Briefly comment on what skills are necessary
-                                  for the reviewee to continue to develop in
-                                  order to progress in their career.{" "}
+                                  Briefly comment on what RDTA skills are
+                                  necessary for the reviewee to continue to
+                                  develop in order to progress in their career.{" "}
                                   <i>(Commentary required)</i>
                                 </Label>
                                 <TextField
