@@ -76,6 +76,25 @@ export default class MapCAMLResult extends ContextService {
     result.Q17Category = item[Columns.Q17Category];
     result.Q18Category = item[Columns.Q18Category];
 
+    result.Q1IsRating = item[Columns.Q1IsRating];
+    result.Q2IsRating = item[Columns.Q2IsRating];
+    result.Q3IsRating = item[Columns.Q3IsRating];
+    result.Q4IsRating = item[Columns.Q4IsRating];
+    result.Q5IsRating = item[Columns.Q5IsRating];
+    result.Q6IsRating = item[Columns.Q6IsRating];
+    result.Q7IsRating = item[Columns.Q7IsRating];
+    result.Q8IsRating = item[Columns.Q8IsRating];
+    result.Q9IsRating = item[Columns.Q9IsRating];
+    result.Q10IsRating = item[Columns.Q10IsRating];
+    result.Q11IsRating = item[Columns.Q11IsRating];
+    result.Q12IsRating = item[Columns.Q12IsRating];
+    result.Q13IsRating = item[Columns.Q13IsRating];
+    result.Q14IsRating = item[Columns.Q14IsRating];
+    result.Q15IsRating = item[Columns.Q15IsRating];
+    result.Q16IsRating = item[Columns.Q16IsRating];
+    result.Q17IsRating = item[Columns.Q17IsRating];
+    result.Q18IsRating = item[Columns.Q18IsRating];
+
     return result;
   }
 
@@ -192,24 +211,24 @@ export default class MapCAMLResult extends ContextService {
     result.Q17Category = "";
     result.Q18Category = "";
 
-    result.Q1ChoiceType = "";
-    result.Q2ChoiceType = "";
-    result.Q3ChoiceType = "";
-    result.Q4ChoiceType = "";
-    result.Q5ChoiceType = "";
-    result.Q6ChoiceType = "";
-    result.Q7ChoiceType = "";
-    result.Q8ChoiceType = "";
-    result.Q9ChoiceType = "";
-    result.Q10ChoiceType = "";
-    result.Q11ChoiceType = "";
-    result.Q12ChoiceType = "";
-    result.Q13ChoiceType = "";
-    result.Q14ChoiceType = "";
-    result.Q15ChoiceType = "";
-    result.Q16ChoiceType = "";
-    result.Q17ChoiceType = "";
-    result.Q18ChoiceType = "";
+    result.Q1IsRating = false;
+    result.Q2IsRating = false;
+    result.Q3IsRating = false;
+    result.Q4IsRating = false;
+    result.Q5IsRating = false;
+    result.Q6IsRating = false;
+    result.Q7IsRating = false;
+    result.Q8IsRating = false;
+    result.Q9IsRating = false;
+    result.Q10IsRating = false;
+    result.Q11IsRating = false;
+    result.Q12IsRating = false;
+    result.Q13IsRating = false;
+    result.Q14IsRating = false;
+    result.Q15IsRating = false;
+    result.Q16IsRating = false;
+    result.Q17IsRating = false;
+    result.Q18IsRating = false;
 
     result.ModifiedBy = this.mapUser(item[Config.BaseColumns.ModifedBy]);
     result.ModifiedOnFormatted = this.mapDateWithFormat(

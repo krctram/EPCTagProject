@@ -40,4 +40,23 @@ export class TAG_QuestionText {
   public Q16Category: string;
   public Q17Category: string;
   public Q18Category: string;
+
+  public Q1IsRating?: boolean;
+  public Q2IsRating?: boolean;
+  public Q3IsRating?: boolean;
+  public Q4IsRating?: boolean;
+  public Q5IsRating?: boolean;
+  public Q6IsRating?: boolean;
+  public Q7IsRating?: boolean;
+  public Q8IsRating?: boolean;
+  public Q9IsRating?: boolean;
+  public Q10IsRating?: boolean;
+  public Q11IsRating?: boolean;
+  public Q12IsRating?: boolean;
+  public Q13IsRating?: boolean;
+  public Q14IsRating?: boolean;
+  public Q15IsRating?: boolean;
+  public Q16IsRating?: boolean;
+  public Q17IsRating?: boolean;
+  public Q18IsRating?: boolean;
 }
