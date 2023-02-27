@@ -20,6 +20,8 @@ import {
   Stack,
   TextField,
   Toggle,
+  Spinner,
+  SpinnerSize,
 } from "@fluentui/react";
 import {
   PeoplePicker,
@@ -89,7 +91,7 @@ export default class Projects extends React.Component<
     if (this.state.IsCreateMode) {
       const emptyProjectDetails = await this.generateEmptyDetails();
       this.setState({
-        IsLoading: false,
+        // IsLoading: false,
         CurrentUserRoles: userRoles,
         ProjectDetails: emptyProjectDetails,
       });
@@ -122,7 +124,7 @@ export default class Projects extends React.Component<
       debugger;
       this.ProjectDetails(projectDetails);
       this.setState({
-        // IsLoading: false,
+        IsLoading: false,
         CurrentUserRoles: userRoles,
         // ProjectDetails: projectDetails,
         DisableSaveButton: !allowSave,
@@ -971,484 +973,439 @@ export default class Projects extends React.Component<
     return (
       <div className={styles.projects}>
         <div className={styles.container}>
-          <div className={styles.logoImg} title="logo"></div>
-          {this.state.IsLoading == false && (
-            <div className={styles.sectionContainer}>
-              <div className={styles.sectionHeader}>
-                <div className={styles.colHeader100}></div>
-              </div>
-              {
-                // View when the Review is not started or declined or soft deleted
-                (this.state.ProjectDetails.StatusOfReview ==
-                  Config.Strings.Status_NotStarted ||
-                  this.state.ProjectDetails.StatusOfReview ==
-                    Config.Strings.Status_Declined ||
-                  this.state.ProjectDetails.StatusOfReview ==
-                    Config.Strings.Status_SoftDeleted ||
-                  this.state.ProjectDetails.StatusOfReview ==
-                    Config.Strings.Status_Split ||
-                  this.state.ProjectDetails.StatusOfReview ==
-                    Config.Strings.Status_Combined) && (
-                  <div className={styles.sectionContent}>
-                    <div className={styles.row}>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblLeftTitle}>Reviewee : </div>{" "}
-                        {this.state.ProjectDetails.Reviewee.Title}
-                      </div>
-                      <div
-                        className={styles.col50left}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                      >
-                        <div className={styles.lblRightTitle}>
-                          Fiscal Year :{" "}
-                        </div>
-                        <div
-                          style={{
-                            width: "40%",
-                          }}
-                        >
-                          <Dropdown
-                            placeholder="Select Fiscal Year"
-                            options={fiscalYearOptions}
-                            selectedKey={this.state.ProjectDetails.FiscalYear}
-                            onChange={(e, selectedOption) => {
-                              this.onChangeDropdownValues(
-                                "FiscalYear",
-                                selectedOption.text
-                              );
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className={styles.row}>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblLeftTitle}>
-                          Project Name :
-                        </div>{" "}
-                        {this.state.ProjectDetails.ProjectName}
-                      </div>
-                      <div
-                        className={styles.col50left}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                      >
-                        <div className={styles.lblRightTitle}>
-                          Service Line :
-                        </div>
-                        <div
-                          style={{
-                            width: "40%",
-                          }}
-                        >
-                          <Dropdown
-                            placeholder="Select Service line"
-                            options={serviceLineOptions}
-                            selectedKey={this.state.ProjectDetails.ServiceLine}
-                            onChange={(e, selectedOption) => {
-                              this.onChangeDropdownValues(
-                                "ServiceLine",
-                                selectedOption.text
-                              );
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className={styles.row}>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblLeftTitle}>
-                          Project Code :
-                        </div>{" "}
-                        {this.state.ProjectDetails.ProjectCode}
-                      </div>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblRightTitle}>
-                          Performance Period :
-                        </div>{" "}
-                        {this.state.ProjectDetails.ProjectStartDateFormatted} -{" "}
-                        {this.state.ProjectDetails.ProjectEndDateFormatted}
-                      </div>
-                    </div>
-                    <div className={styles.SpacerSmall}>&nbsp;</div>
-                    <div className={styles.row}>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblLeftTitle}>Client :</div>{" "}
-                        {this.state.ProjectDetails.ClientName}
-                      </div>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblRightTitle}>
-                          Hours Worked :
-                        </div>{" "}
-                        {this.state.ProjectDetails.HoursWorked}
-                      </div>
-                    </div>
-                    <div className={styles.SpacerSmall}>&nbsp;</div>
-                    <div className={styles.row}>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblLeftTitle}>Home Office :</div>{" "}
-                        {this.state.ProjectDetails.HomeOffice}
-                      </div>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblRightTitle}>Job Role :</div>{" "}
-                        {this.state.ProjectDetails.JobTitle}
-                      </div>
-                    </div>
-                    <div className={styles.Spacer}>&nbsp;</div>
-                    <div className={styles.row}>
-                      <div className={styles.col100}>
-                        <b>REVIEWEE: </b> To initiate a review, indicate the
-                        Reviewer and confirm the Lead MD below. Choose the
-                        Fiscal Year and Service Line at the top and then click{" "}
-                        <b>Start Review</b>.
-                        <br />
-                        <ul>
-                          <li>
-                            <b>Combined reviews:</b> If this review is to be
-                            combined with other reviews,{" "}
-                            <b className={styles.inRed}>do not</b> start it
-                            here. Click "Combine Reviews" on the left-hand side.
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className={styles.row}>
-                      <div className={styles.col100}>
-                        <div className={styles.highlightedInstruction}>
-                          {this.state.ProjectDetails.StatusOfReview ==
-                            Config.Strings.Status_Split && (
-                            <b>
-                              This review was split into at least one additional
-                              review.
-                            </b>
-                          )}
-                          {this.state.ProjectDetails.StatusOfReview ==
-                            Config.Strings.Status_Combined && (
-                            <b>
-                              This review is now a part of a Combined Review.
-                            </b>
-                          )}
-                          {this.state.ProjectDetails.StatusOfReview ==
-                            Config.Strings.Status_Declined && (
-                            <b>
-                              This review was declined by{" "}
-                              {this.state.ProjectDetails.ModifiedBy.Title} on{" "}
-                              {this.state.ProjectDetails.ModifiedOnFormatted}
-                            </b>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    {this.state.ProjectDetails.StatusOfReview !=
-                      Config.Strings.Status_Declined &&
-                    this.state.ProjectDetails.StatusOfReview !=
-                      Config.Strings.Status_Split &&
-                    this.state.ProjectDetails.StatusOfReview !=
-                      Config.Strings.Status_Combined ? (
+          {this.state.IsLoading == false ? (
+            <>
+              <div className={styles.logoImg} title="logo"></div>
+              <div className={styles.sectionContainer}>
+                <div className={styles.sectionHeader}>
+                  <div className={styles.colHeader100}></div>
+                </div>
+                {
+                  // View when the Review is not started or declined or soft deleted
+                  (this.state.ProjectDetails.StatusOfReview ==
+                    Config.Strings.Status_NotStarted ||
+                    this.state.ProjectDetails.StatusOfReview ==
+                      Config.Strings.Status_Declined ||
+                    this.state.ProjectDetails.StatusOfReview ==
+                      Config.Strings.Status_SoftDeleted ||
+                    this.state.ProjectDetails.StatusOfReview ==
+                      Config.Strings.Status_Split ||
+                    this.state.ProjectDetails.StatusOfReview ==
+                      Config.Strings.Status_Combined) && (
+                    <div className={styles.sectionContent}>
                       <div className={styles.row}>
-                        <div className={styles.col25left}>
-                          <label>
-                            <b>Reviewer </b>
-                            <span className={styles.inRed}>*</span>
-                          </label>
-                          <PeoplePicker
-                            context={this.props.AppContext as any}
-                            personSelectionLimit={1}
-                            groupName={""} // Leave this blank in case you want to filter from all users
-                            showtooltip={true}
-                            required={true}
-                            ensureUser={true}
-                            showHiddenInUI={false}
-                            principalTypes={[PrincipalType.User]}
-                            defaultSelectedUsers={[
-                              this.state.ProjectDetails.Reviewer.Email,
-                            ]}
-                            onChange={(selected) => {
-                              this.onChangePersonField("Reviewer", selected);
-                            }}
-                            resolveDelay={1000}
-                          />
+                        <div className={styles.col50left}>
+                          <div className={styles.lblLeftTitle}>Reviewee : </div>{" "}
+                          {this.state.ProjectDetails.Reviewee.Title}
                         </div>
-                        <div className={styles.col25left}>
-                          <label>
-                            <b>Lead MD </b>
-                            <span className={styles.inRed}>*</span>
-                          </label>
-                          <PeoplePicker
-                            context={this.props.AppContext as any}
-                            personSelectionLimit={1}
-                            groupName={""} // Leave this blank in case you want to filter from all users
-                            showtooltip={true}
-                            required={true}
-                            ensureUser={true}
-                            showHiddenInUI={false}
-                            principalTypes={[PrincipalType.User]}
-                            defaultSelectedUsers={[
-                              this.state.ProjectDetails.LeadMD.Email,
-                            ]}
-                            onChange={(selected) => {
-                              this.onChangePersonField("LeadMD", selected);
+                        <div
+                          className={styles.col50left}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <div className={styles.lblRightTitle}>
+                            Fiscal Year :{" "}
+                          </div>
+                          <div
+                            style={{
+                              width: "40%",
                             }}
-                            resolveDelay={1000}
-                          />
+                          >
+                            <Dropdown
+                              placeholder="Select Fiscal Year"
+                              options={fiscalYearOptions}
+                              selectedKey={this.state.ProjectDetails.FiscalYear}
+                              onChange={(e, selectedOption) => {
+                                this.onChangeDropdownValues(
+                                  "FiscalYear",
+                                  selectedOption.text
+                                );
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className={styles.row}>
+                        <div className={styles.col50left}>
+                          <div className={styles.lblLeftTitle}>
+                            Project Name :
+                          </div>{" "}
+                          {this.state.ProjectDetails.ProjectName}
+                        </div>
+                        <div
+                          className={styles.col50left}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <div className={styles.lblRightTitle}>
+                            Service Line :
+                          </div>
+                          <div
+                            style={{
+                              width: "40%",
+                            }}
+                          >
+                            <Dropdown
+                              placeholder="Select Service line"
+                              options={serviceLineOptions}
+                              selectedKey={
+                                this.state.ProjectDetails.ServiceLine
+                              }
+                              onChange={(e, selectedOption) => {
+                                this.onChangeDropdownValues(
+                                  "ServiceLine",
+                                  selectedOption.text
+                                );
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className={styles.row}>
+                        <div className={styles.col50left}>
+                          <div className={styles.lblLeftTitle}>
+                            Project Code :
+                          </div>{" "}
+                          {this.state.ProjectDetails.ProjectCode}
                         </div>
                         <div className={styles.col50left}>
+                          <div className={styles.lblRightTitle}>
+                            Performance Period :
+                          </div>{" "}
+                          {this.state.ProjectDetails.ProjectStartDateFormatted}{" "}
+                          - {this.state.ProjectDetails.ProjectEndDateFormatted}
+                        </div>
+                      </div>
+                      <div className={styles.SpacerSmall}>&nbsp;</div>
+                      <div className={styles.row}>
+                        <div className={styles.col50left}>
+                          <div className={styles.lblLeftTitle}>Client :</div>{" "}
+                          {this.state.ProjectDetails.ClientName}
+                        </div>
+                        <div className={styles.col50left}>
+                          <div className={styles.lblRightTitle}>
+                            Hours Worked :
+                          </div>{" "}
+                          {this.state.ProjectDetails.HoursWorked}
+                        </div>
+                      </div>
+                      <div className={styles.SpacerSmall}>&nbsp;</div>
+                      <div className={styles.row}>
+                        <div className={styles.col50left}>
+                          <div className={styles.lblLeftTitle}>
+                            Home Office :
+                          </div>{" "}
+                          {this.state.ProjectDetails.HomeOffice}
+                        </div>
+                        <div className={styles.col50left}>
+                          <div className={styles.lblRightTitle}>Job Role :</div>{" "}
+                          {this.state.ProjectDetails.JobTitle}
+                        </div>
+                      </div>
+                      <div className={styles.Spacer}>&nbsp;</div>
+                      <div className={styles.row}>
+                        <div className={styles.col100}>
+                          <b>REVIEWEE: </b> To initiate a review, indicate the
+                          Reviewer and confirm the Lead MD below. Choose the
+                          Fiscal Year and Service Line at the top and then click{" "}
+                          <b>Start Review</b>.
                           <br />
-                          <Stack
-                            horizontal
-                            tokens={stackTokens}
-                            className={styles.stackCenter}
-                          >
-                            <PrimaryButton
-                              text="START REVIEW"
-                              onClick={this.onSubmit}
-                              disabled={this.state.DisableSubmitButton}
-                            ></PrimaryButton>
+                          <ul>
+                            <li>
+                              <b>Combined reviews:</b> If this review is to be
+                              combined with other reviews,{" "}
+                              <b className={styles.inRed}>do not</b> start it
+                              here. Click "Combine Reviews" on the left-hand
+                              side.
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div className={styles.row}>
+                        <div className={styles.col100}>
+                          <div className={styles.highlightedInstruction}>
+                            {this.state.ProjectDetails.StatusOfReview ==
+                              Config.Strings.Status_Split && (
+                              <b>
+                                This review was split into at least one
+                                additional review.
+                              </b>
+                            )}
+                            {this.state.ProjectDetails.StatusOfReview ==
+                              Config.Strings.Status_Combined && (
+                              <b>
+                                This review is now a part of a Combined Review.
+                              </b>
+                            )}
+                            {this.state.ProjectDetails.StatusOfReview ==
+                              Config.Strings.Status_Declined && (
+                              <b>
+                                This review was declined by{" "}
+                                {this.state.ProjectDetails.ModifiedBy.Title} on{" "}
+                                {this.state.ProjectDetails.ModifiedOnFormatted}
+                              </b>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {this.state.ProjectDetails.StatusOfReview !=
+                        Config.Strings.Status_Declined &&
+                      this.state.ProjectDetails.StatusOfReview !=
+                        Config.Strings.Status_Split &&
+                      this.state.ProjectDetails.StatusOfReview !=
+                        Config.Strings.Status_Combined ? (
+                        <div className={styles.row}>
+                          <div className={styles.col25left}>
+                            <label>
+                              <b>Reviewer </b>
+                              <span className={styles.inRed}>*</span>
+                            </label>
+                            <PeoplePicker
+                              context={this.props.AppContext as any}
+                              personSelectionLimit={1}
+                              groupName={""} // Leave this blank in case you want to filter from all users
+                              showtooltip={true}
+                              required={true}
+                              ensureUser={true}
+                              showHiddenInUI={false}
+                              principalTypes={[PrincipalType.User]}
+                              defaultSelectedUsers={[
+                                this.state.ProjectDetails.Reviewer.Email,
+                              ]}
+                              onChange={(selected) => {
+                                this.onChangePersonField("Reviewer", selected);
+                              }}
+                              resolveDelay={1000}
+                            />
+                          </div>
+                          <div className={styles.col25left}>
+                            <label>
+                              <b>Lead MD </b>
+                              <span className={styles.inRed}>*</span>
+                            </label>
+                            <PeoplePicker
+                              context={this.props.AppContext as any}
+                              personSelectionLimit={1}
+                              groupName={""} // Leave this blank in case you want to filter from all users
+                              showtooltip={true}
+                              required={true}
+                              ensureUser={true}
+                              showHiddenInUI={false}
+                              principalTypes={[PrincipalType.User]}
+                              defaultSelectedUsers={[
+                                this.state.ProjectDetails.LeadMD.Email,
+                              ]}
+                              onChange={(selected) => {
+                                this.onChangePersonField("LeadMD", selected);
+                              }}
+                              resolveDelay={1000}
+                            />
+                          </div>
+                          <div className={styles.col50left}>
+                            <br />
+                            <Stack
+                              horizontal
+                              tokens={stackTokens}
+                              className={styles.stackCenter}
+                            >
+                              <PrimaryButton
+                                text="START REVIEW"
+                                onClick={this.onSubmit}
+                                disabled={this.state.DisableSubmitButton}
+                              ></PrimaryButton>
+                              <PrimaryButton
+                                text="Cancel"
+                                onClick={this.onCancel}
+                              ></PrimaryButton>
+                            </Stack>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className={styles.row}>
+                          <div className={styles.col100right}>
                             <PrimaryButton
                               text="Cancel"
                               onClick={this.onCancel}
                             ></PrimaryButton>
-                          </Stack>
+                          </div>
                         </div>
-                      </div>
-                    ) : (
+                      )}
+                    </div>
+                  )
+                }
+                {
+                  // View when the Review is started and acknowledged
+                  (this.state.ProjectDetails.StatusOfReview ==
+                    Config.Strings.Status_Acknowledged ||
+                    this.state.ProjectDetails.StatusOfReview ==
+                      Config.Strings.Status_AwaitingAcknowledgement ||
+                    this.state.ProjectDetails.StatusOfReview ==
+                      Config.Strings.Status_AwaitingLeadMD ||
+                    this.state.ProjectDetails.StatusOfReview ==
+                      Config.Strings.Status_AwaitingReviewer ||
+                    this.state.ProjectDetails.StatusOfReview ==
+                      Config.Strings.Status_AwaitingReviewee) && (
+                    <div className={styles.sectionContent}>
                       <div className={styles.row}>
-                        <div className={styles.col100right}>
-                          <PrimaryButton
-                            text="Cancel"
-                            onClick={this.onCancel}
-                          ></PrimaryButton>
+                        <div className={styles.col50left}>
+                          <div className={styles.lblLeftTitle}>Reviewee : </div>{" "}
+                          {this.state.ProjectDetails.Reviewee.Title}
+                        </div>
+                        <div className={styles.col50left}>
+                          <div className={styles.lblRightTitle}>
+                            Performance Period :
+                          </div>{" "}
+                          {this.state.ProjectDetails.ProjectStartDateFormatted}{" "}
+                          - {this.state.ProjectDetails.ProjectEndDateFormatted}
                         </div>
                       </div>
-                    )}
-                  </div>
-                )
-              }
-              {
-                // View when the Review is started and acknowledged
-                (this.state.ProjectDetails.StatusOfReview ==
-                  Config.Strings.Status_Acknowledged ||
-                  this.state.ProjectDetails.StatusOfReview ==
-                    Config.Strings.Status_AwaitingAcknowledgement ||
-                  this.state.ProjectDetails.StatusOfReview ==
-                    Config.Strings.Status_AwaitingLeadMD ||
-                  this.state.ProjectDetails.StatusOfReview ==
-                    Config.Strings.Status_AwaitingReviewer ||
-                  this.state.ProjectDetails.StatusOfReview ==
-                    Config.Strings.Status_AwaitingReviewee) && (
-                  <div className={styles.sectionContent}>
-                    <div className={styles.row}>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblLeftTitle}>Reviewee : </div>{" "}
-                        {this.state.ProjectDetails.Reviewee.Title}
-                      </div>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblRightTitle}>
-                          Performance Period :
-                        </div>{" "}
-                        {this.state.ProjectDetails.ProjectStartDateFormatted} -{" "}
-                        {this.state.ProjectDetails.ProjectEndDateFormatted}
-                      </div>
-                    </div>
-                    <div className={styles.row}>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblLeftTitle}>Home Office :</div>{" "}
-                        {this.state.ProjectDetails.HomeOffice}
-                      </div>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblRightTitle}>Job Role :</div>{" "}
-                        {this.state.ProjectDetails.JobTitle}
-                      </div>
-                    </div>
-                    <div className={styles.row}>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblLeftTitle}>
-                          Project Name :
-                        </div>{" "}
-                        {this.state.ProjectDetails.ProjectName}
-                      </div>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblRightTitle}>
-                          Date Review Originated :
-                        </div>{" "}
-                        {this.state.ProjectDetails.DateOriginatedFormatted}
-                      </div>
-                    </div>
-                    <div className={styles.row}>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblLeftTitle}>Client : </div>{" "}
-                        {this.state.ProjectDetails.ClientName}
-                      </div>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblRightTitle}>
-                          Date Review Completed :
-                        </div>{" "}
-                        {this.state.ProjectDetails.DateReviewCompletedFormatted}
-                      </div>
-                    </div>
-                    <div className={styles.row}>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblLeftTitle}>
-                          Fiscal Year :{" "}
-                        </div>{" "}
-                        {this.state.ProjectDetails.FiscalYear}
-                      </div>
-                      <div className={styles.col50left}>
-                        <div className={styles.lblRightTitle}>
-                          Service Line :
-                        </div>{" "}
-                        {this.state.ProjectDetails.ServiceLine}
-                      </div>
-                    </div>
-                    <div className={styles.row}>
-                      <div className={styles.col100}>
-                        <div className={styles.highlightedInstruction}>
-                          <b>
-                            REVIEWEES: Please go directly to the Commentary
-                            section at the bottom.
-                          </b>
-                          <br />
-                          The Reviewer will determine the complexity & ratings
-                          by competency.
+                      <div className={styles.row}>
+                        <div className={styles.col50left}>
+                          <div className={styles.lblLeftTitle}>
+                            Home Office :
+                          </div>{" "}
+                          {this.state.ProjectDetails.HomeOffice}
+                        </div>
+                        <div className={styles.col50left}>
+                          <div className={styles.lblRightTitle}>Job Role :</div>{" "}
+                          {this.state.ProjectDetails.JobTitle}
                         </div>
                       </div>
-                    </div>
-                    <div className={styles.Spacer}>&nbsp;</div>
-                    <div className={styles.row}>
-                      <div className={styles.col10left}>
-                        <b>Hours worked :</b>
+                      <div className={styles.row}>
+                        <div className={styles.col50left}>
+                          <div className={styles.lblLeftTitle}>
+                            Project Name :
+                          </div>{" "}
+                          {this.state.ProjectDetails.ProjectName}
+                        </div>
+                        <div className={styles.col50left}>
+                          <div className={styles.lblRightTitle}>
+                            Date Review Originated :
+                          </div>{" "}
+                          {this.state.ProjectDetails.DateOriginatedFormatted}
+                        </div>
                       </div>
-                      <div className={styles.col25left}>
-                        <TextField
-                          value={
-                            this.state.ProjectDetails.HoursWorked != null
-                              ? this.state.ProjectDetails.HoursWorked.toString()
-                              : ""
+                      <div className={styles.row}>
+                        <div className={styles.col50left}>
+                          <div className={styles.lblLeftTitle}>Client : </div>{" "}
+                          {this.state.ProjectDetails.ClientName}
+                        </div>
+                        <div className={styles.col50left}>
+                          <div className={styles.lblRightTitle}>
+                            Date Review Completed :
+                          </div>{" "}
+                          {
+                            this.state.ProjectDetails
+                              .DateReviewCompletedFormatted
                           }
-                          disabled={!this.state.OnlyEnableForReviewer}
-                          onChange={(e, newValue) => {
-                            this.onChangeTextField("HoursWorked", newValue);
-                          }}
-                        />
+                        </div>
                       </div>
-                    </div>
-                    <div className={styles.row}>
-                      <div className={styles.col10left}>
-                        <b>Complexity :</b>{" "}
-                        <span className={styles.inRed}>*</span>
+                      <div className={styles.row}>
+                        <div className={styles.col50left}>
+                          <div className={styles.lblLeftTitle}>
+                            Fiscal Year :{" "}
+                          </div>{" "}
+                          {this.state.ProjectDetails.FiscalYear}
+                        </div>
+                        <div className={styles.col50left}>
+                          <div className={styles.lblRightTitle}>
+                            Service Line :
+                          </div>{" "}
+                          {this.state.ProjectDetails.ServiceLine}
+                        </div>
                       </div>
-                      <div className={styles.col25left}>
-                        <Dropdown
-                          placeholder="Select Complexity"
-                          options={complexityOptions}
-                          disabled={!this.state.OnlyEnableForReviewer}
-                          selectedKey={this.state.ProjectDetails.Complexity}
-                          onChange={(e, selectedOption) => {
-                            this.onChangeDropdownValues(
-                              "Complexity",
-                              selectedOption.text
-                            );
-                          }}
-                        />
+                      <div className={styles.row}>
+                        <div className={styles.col100}>
+                          <div className={styles.highlightedInstruction}>
+                            <b>
+                              REVIEWEES: Please go directly to the Commentary
+                              section at the bottom.
+                            </b>
+                            <br />
+                            The Reviewer will determine the complexity & ratings
+                            by competency.
+                          </div>
+                        </div>
                       </div>
-                    </div>
-
-                    <React.Fragment>
                       <div className={styles.Spacer}>&nbsp;</div>
                       <div className={styles.row}>
-                        {(this.state.ProjectDetails.StatusOfReview ==
-                          Config.Strings.Status_AwaitingReviewer ||
-                          this.state.ProjectDetails.StatusOfReview ==
-                            Config.Strings.Status_AwaitingReviewee ||
-                          this.state.ProjectDetails.StatusOfReview ==
-                            Config.Strings.Status_AwaitingLeadMD ||
-                          this.state.ProjectDetails.StatusOfReview ==
-                            Config.Strings.Status_Acknowledged) && (
-                          <React.Fragment>
-                            <div className={styles.col25left}>
-                              <label>
-                                <b>Reviewer :</b>
-                              </label>
-                              <PeoplePicker
-                                context={this.props.AppContext as any}
-                                personSelectionLimit={1}
-                                groupName={""} // Leave this blank in case you want to filter from all users
-                                showtooltip={true}
-                                required={true}
-                                ensureUser={true}
-                                disabled={true}
-                                showHiddenInUI={false}
-                                principalTypes={[PrincipalType.User]}
-                                defaultSelectedUsers={[
-                                  this.state.ProjectDetails.Reviewer.Email,
-                                ]}
-                                resolveDelay={1000}
-                              />
-                            </div>
-                            <div className={styles.col25left}>
-                              <label>
-                                <b>Lead MD :</b>
-                              </label>
-                              <PeoplePicker
-                                context={this.props.AppContext as any}
-                                personSelectionLimit={1}
-                                groupName={""} // Leave this blank in case you want to filter from all users
-                                showtooltip={true}
-                                required={true}
-                                ensureUser={true}
-                                disabled={true}
-                                showHiddenInUI={false}
-                                principalTypes={[PrincipalType.User]}
-                                defaultSelectedUsers={[
-                                  this.state.ProjectDetails.LeadMD.Email,
-                                ]}
-                                resolveDelay={1000}
-                              />
-                            </div>
-                          </React.Fragment>
-                        )}
-                        <div
-                          className={
-                            this.state.ProjectDetails.StatusOfReview ==
-                              Config.Strings.Status_AwaitingReviewer ||
+                        <div className={styles.col25left}>
+                          <b>Hours worked :</b>
+                          {/* </div>
+                        <div className={styles.col25left}> */}
+                          <TextField
+                            value={
+                              this.state.ProjectDetails.HoursWorked != null
+                                ? this.state.ProjectDetails.HoursWorked.toString()
+                                : ""
+                            }
+                            disabled={!this.state.OnlyEnableForReviewer}
+                            onChange={(e, newValue) => {
+                              this.onChangeTextField("HoursWorked", newValue);
+                            }}
+                          />
+                        </div>
+                        <div className={styles.col25left}>
+                          <b>Complexity :</b>
+                          <span className={styles.inRed}>*</span>
+                          {/* </div>
+                        <div className={styles.col25left}> */}
+                          <Dropdown
+                            placeholder="Select Complexity"
+                            options={complexityOptions}
+                            disabled={!this.state.OnlyEnableForReviewer}
+                            selectedKey={this.state.ProjectDetails.Complexity}
+                            onChange={(e, selectedOption) => {
+                              this.onChangeDropdownValues(
+                                "Complexity",
+                                selectedOption.text
+                              );
+                            }}
+                          />
+                        </div>
+                      </div>
+                      {/* <div className={styles.row}>
+                        <div className={styles.col10left}>
+                          <b>Complexity :</b>{" "}
+                          <span className={styles.inRed}>*</span>
+                        </div>
+                        <div className={styles.col25left}>
+                          <Dropdown
+                            placeholder="Select Complexity"
+                            options={complexityOptions}
+                            disabled={!this.state.OnlyEnableForReviewer}
+                            selectedKey={this.state.ProjectDetails.Complexity}
+                            onChange={(e, selectedOption) => {
+                              this.onChangeDropdownValues(
+                                "Complexity",
+                                selectedOption.text
+                              );
+                            }}
+                          />
+                        </div>
+                      </div> */}
+
+                      <React.Fragment>
+                        <div className={styles.Spacer}>&nbsp;</div>
+                        <div className={styles.row}>
+                          {(this.state.ProjectDetails.StatusOfReview ==
+                            Config.Strings.Status_AwaitingReviewer ||
                             this.state.ProjectDetails.StatusOfReview ==
                               Config.Strings.Status_AwaitingReviewee ||
                             this.state.ProjectDetails.StatusOfReview ==
                               Config.Strings.Status_AwaitingLeadMD ||
                             this.state.ProjectDetails.StatusOfReview ==
-                              Config.Strings.Status_Acknowledged
-                              ? styles.col25Right
-                              : styles.col75right
-                          }
-                        ></div>
-                        <div className={styles.col25left}>
-                          <label>
-                            <b>Review Status :</b>
-                          </label>
-                          <br />
-                          <TextField
-                            disabled={true}
-                            value={this.state.ProjectDetails.StatusOfReview}
-                          />
-                        </div>
-                      </div>
-                    </React.Fragment>
-                    {(this.state.ProjectDetails.StatusOfReview ==
-                      Config.Strings.Status_AwaitingReviewer ||
-                      this.state.ProjectDetails.StatusOfReview ==
-                        Config.Strings.Status_AwaitingLeadMD) && (
-                      <React.Fragment>
-                        <div className={styles.Spacer}>&nbsp;</div>
-                        <div className={styles.row}>
-                          <div className={styles.col35left}>
-                            <div className={styles.row}>
-                              <div className={styles.col50left}>
+                              Config.Strings.Status_Acknowledged) && (
+                            <React.Fragment>
+                              <div className={styles.col25left}>
+                                <label>
+                                  <b>Reviewer :</b>
+                                </label>
                                 <PeoplePicker
                                   context={this.props.AppContext as any}
                                   personSelectionLimit={1}
@@ -1456,67 +1413,141 @@ export default class Projects extends React.Component<
                                   showtooltip={true}
                                   required={true}
                                   ensureUser={true}
+                                  disabled={true}
                                   showHiddenInUI={false}
                                   principalTypes={[PrincipalType.User]}
                                   defaultSelectedUsers={[
-                                    this.state.ProjectDetails.SubstituteUser
-                                      .Email,
+                                    this.state.ProjectDetails.Reviewer.Email,
                                   ]}
-                                  onChange={(selected) => {
-                                    this.onChangePersonField(
-                                      "SubstituteUser",
-                                      selected
-                                    );
-                                  }}
                                   resolveDelay={1000}
                                 />
                               </div>
-                              <div className={styles.col50left}>
-                                <PrimaryButton
-                                  text="REPLACE ME"
-                                  onClick={this.onReplaceMe}
-                                  disabled={
-                                    !this.hasEditItemPermission ||
-                                    this.state.ProjectDetails.SubstituteUser
-                                      .Id == null
-                                  }
-                                ></PrimaryButton>
+                              <div className={styles.col25left}>
+                                <label>
+                                  <b>Lead MD :</b>
+                                </label>
+                                <PeoplePicker
+                                  context={this.props.AppContext as any}
+                                  personSelectionLimit={1}
+                                  groupName={""} // Leave this blank in case you want to filter from all users
+                                  showtooltip={true}
+                                  required={true}
+                                  ensureUser={true}
+                                  disabled={true}
+                                  showHiddenInUI={false}
+                                  principalTypes={[PrincipalType.User]}
+                                  defaultSelectedUsers={[
+                                    this.state.ProjectDetails.LeadMD.Email,
+                                  ]}
+                                  resolveDelay={1000}
+                                />
                               </div>
-                            </div>
-                          </div>
-                          <div className={styles.col50left}>
-                            <b>Should you be reviewing this person?</b> If not,
-                            enter your replacement in the box at left and click{" "}
-                            <b>Replace Me</b>. The review's current status will
-                            be saved, and your replacement will pick up where
-                            you left off.
+                            </React.Fragment>
+                          )}
+                          <div
+                            className={
+                              this.state.ProjectDetails.StatusOfReview ==
+                                Config.Strings.Status_AwaitingReviewer ||
+                              this.state.ProjectDetails.StatusOfReview ==
+                                Config.Strings.Status_AwaitingReviewee ||
+                              this.state.ProjectDetails.StatusOfReview ==
+                                Config.Strings.Status_AwaitingLeadMD ||
+                              this.state.ProjectDetails.StatusOfReview ==
+                                Config.Strings.Status_Acknowledged
+                                ? styles.col25Right
+                                : styles.col75right
+                            }
+                          ></div>
+                          <div className={styles.col25left}>
+                            <label>
+                              <b>Review Status :</b>
+                            </label>
+                            <br />
+                            <TextField
+                              disabled={true}
+                              value={this.state.ProjectDetails.StatusOfReview}
+                            />
                           </div>
                         </div>
                       </React.Fragment>
-                    )}
-                    <div className={styles.Spacer}>&nbsp;</div>
-
-                    <PerformanceRatingScale
-                      AppContext={this.props.AppContext}
-                      IsLoading={false}
-                    ></PerformanceRatingScale>
-                    {!(
-                      this.state.ProjectDetails.ServiceLine ==
-                      "Data Intelligence Gateway"
-                    ) && (
-                      <div>
-                        <div className={styles.sectionContainer}>
-                          <div className={styles.sectionHeader}>
-                            <div className={styles.colHeader100}>
-                              <span className={styles.subTitle}>
-                                SERVICE EXCELLENCE
-                              </span>
+                      {(this.state.ProjectDetails.StatusOfReview ==
+                        Config.Strings.Status_AwaitingReviewer ||
+                        this.state.ProjectDetails.StatusOfReview ==
+                          Config.Strings.Status_AwaitingLeadMD) && (
+                        <React.Fragment>
+                          <div className={styles.Spacer}>&nbsp;</div>
+                          <div className={styles.row}>
+                            <div className={styles.col35left}>
+                              <div className={styles.row}>
+                                <div className={styles.col50left}>
+                                  <PeoplePicker
+                                    context={this.props.AppContext as any}
+                                    personSelectionLimit={1}
+                                    groupName={""} // Leave this blank in case you want to filter from all users
+                                    showtooltip={true}
+                                    required={true}
+                                    ensureUser={true}
+                                    showHiddenInUI={false}
+                                    principalTypes={[PrincipalType.User]}
+                                    defaultSelectedUsers={[
+                                      this.state.ProjectDetails.SubstituteUser
+                                        .Email,
+                                    ]}
+                                    onChange={(selected) => {
+                                      this.onChangePersonField(
+                                        "SubstituteUser",
+                                        selected
+                                      );
+                                    }}
+                                    resolveDelay={1000}
+                                  />
+                                </div>
+                                <div className={styles.col50left}>
+                                  <PrimaryButton
+                                    text="REPLACE ME"
+                                    onClick={this.onReplaceMe}
+                                    disabled={
+                                      !this.hasEditItemPermission ||
+                                      this.state.ProjectDetails.SubstituteUser
+                                        .Id == null
+                                    }
+                                  ></PrimaryButton>
+                                </div>
+                              </div>
+                            </div>
+                            <div className={styles.col50left}>
+                              <b>Should you be reviewing this person?</b> If
+                              not, enter your replacement in the box at left and
+                              click <b>Replace Me</b>. The review's current
+                              status will be saved, and your replacement will
+                              pick up where you left off.
                             </div>
                           </div>
-                          <div className={styles.sectionContent}>
-                            {this.onRenderHTML("SERVICE EXCELLENCE")}
+                        </React.Fragment>
+                      )}
+                      <div className={styles.Spacer}>&nbsp;</div>
 
-                            {/* <div className={styles.row}>
+                      <PerformanceRatingScale
+                        AppContext={this.props.AppContext}
+                        IsLoading={false}
+                      ></PerformanceRatingScale>
+                      {!(
+                        this.state.ProjectDetails.ServiceLine ==
+                        "Data Intelligence Gateway"
+                      ) && (
+                        <div>
+                          <div className={styles.sectionContainer}>
+                            <div className={styles.sectionHeader}>
+                              <div className={styles.colHeader100}>
+                                <span className={styles.subTitle}>
+                                  SERVICE EXCELLENCE
+                                </span>
+                              </div>
+                            </div>
+                            <div className={styles.sectionContent}>
+                              {this.onRenderHTML("SERVICE EXCELLENCE")}
+
+                              {/* <div className={styles.row}>
                               <div className={styles.col80left}>
                                 <div>
                                   {Parser().parse(
@@ -1566,20 +1597,20 @@ export default class Projects extends React.Component<
                               </div>
                             </div>
                             <div className={styles.Spacer}>&nbsp;</div> */}
-                          </div>
-                        </div>
-
-                        <div className={styles.sectionContainer}>
-                          <div className={styles.sectionHeader}>
-                            <div className={styles.colHeader100}>
-                              <span className={styles.subTitle}>
-                                FOUNDATIONAL EXPERTISE
-                              </span>
                             </div>
                           </div>
-                          <div className={styles.sectionContent}>
-                            {this.onRenderHTML("FOUNDATIONAL EXPERTISE")}
-                            {/* <div className={styles.row}>
+
+                          <div className={styles.sectionContainer}>
+                            <div className={styles.sectionHeader}>
+                              <div className={styles.colHeader100}>
+                                <span className={styles.subTitle}>
+                                  FOUNDATIONAL EXPERTISE
+                                </span>
+                              </div>
+                            </div>
+                            <div className={styles.sectionContent}>
+                              {this.onRenderHTML("FOUNDATIONAL EXPERTISE")}
+                              {/* <div className={styles.row}>
                               <div className={styles.col80left}>
                                 <div>
                                   {Parser().parse(
@@ -1679,22 +1710,22 @@ export default class Projects extends React.Component<
                               </div>
                             </div>
                             <div className={styles.Spacer}>&nbsp;</div> */}
-                          </div>
-                        </div>
-
-                        <div className={styles.sectionContainer}>
-                          <div className={styles.sectionHeader}>
-                            <div className={styles.colHeader100}>
-                              <span className={styles.subTitle}>
-                                PRACTICE OPERATIONS & LEADERSHIP
-                              </span>
                             </div>
                           </div>
-                          <div className={styles.sectionContent}>
-                            {this.onRenderHTML(
-                              "PRACTICE OPERATIONS & LEADERSHIP"
-                            )}
-                            {/* <div className={styles.row}>
+
+                          <div className={styles.sectionContainer}>
+                            <div className={styles.sectionHeader}>
+                              <div className={styles.colHeader100}>
+                                <span className={styles.subTitle}>
+                                  PRACTICE OPERATIONS & LEADERSHIP
+                                </span>
+                              </div>
+                            </div>
+                            <div className={styles.sectionContent}>
+                              {this.onRenderHTML(
+                                "PRACTICE OPERATIONS & LEADERSHIP"
+                              )}
+                              {/* <div className={styles.row}>
                               <div className={styles.col80left}>
                                 <div>
                                   {Parser().parse(
@@ -1769,20 +1800,20 @@ export default class Projects extends React.Component<
                               </div>
                             </div>
                             <div className={styles.Spacer}>&nbsp;</div> */}
-                          </div>
-                        </div>
-
-                        <div className={styles.sectionContainer}>
-                          <div className={styles.sectionHeader}>
-                            <div className={styles.colHeader100}>
-                              <span className={styles.subTitle}>
-                                PERSONAL EFFECTIVENESS
-                              </span>
                             </div>
                           </div>
-                          <div className={styles.sectionContent}>
-                            {this.onRenderHTML("PERSONAL EFFECTIVENESS")}
-                            {/* <div className={styles.row}>
+
+                          <div className={styles.sectionContainer}>
+                            <div className={styles.sectionHeader}>
+                              <div className={styles.colHeader100}>
+                                <span className={styles.subTitle}>
+                                  PERSONAL EFFECTIVENESS
+                                </span>
+                              </div>
+                            </div>
+                            <div className={styles.sectionContent}>
+                              {this.onRenderHTML("PERSONAL EFFECTIVENESS")}
+                              {/* <div className={styles.row}>
                               <div className={styles.col80left}>
                                 <div>
                                   {Parser().parse(
@@ -1857,160 +1888,236 @@ export default class Projects extends React.Component<
                               </div>
                             </div>
                             <div className={styles.Spacer}>&nbsp;</div> */}
+                            </div>
                           </div>
-                        </div>
 
-                        <div className={styles.sectionContainer}>
-                          <div className={styles.sectionHeader}>
-                            <div className={styles.colHeader100}></div>
+                          <div className={styles.sectionContainer}>
+                            <div className={styles.sectionHeader}>
+                              <div className={styles.colHeader100}></div>
+                            </div>
+                            <div className={styles.sectionContent}>
+                              <div className={styles.row}>
+                                <div className={styles.col100}>
+                                  <Label>
+                                    Briefly comment on the Reviewee's top areas
+                                    of strong performance on this project and
+                                    following the RDTA principles. Your comments
+                                    should support, at minimum, any 4 ratings
+                                    above. <i>(Commentary required)</i>
+                                  </Label>
+                                  <TextField
+                                    resizable={false}
+                                    multiline={true}
+                                    value={
+                                      this.state.ProjectDetails
+                                        .StrongPerformance
+                                    }
+                                    disabled={
+                                      this.state.ProjectDetails
+                                        .StatusOfReview ==
+                                        Config.Strings.Status_AwaitingLeadMD ||
+                                      this.state.ProjectDetails
+                                        .StatusOfReview ==
+                                        Config.Strings
+                                          .Status_AwaitingAcknowledgement ||
+                                      this.state.ProjectDetails
+                                        .StatusOfReview ==
+                                        Config.Strings.Status_Acknowledged
+                                    }
+                                    onChange={(e, newValue) => {
+                                      this.onChangeTextField(
+                                        "StrongPerformance",
+                                        newValue
+                                      );
+                                    }}
+                                  ></TextField>
+                                </div>
+                              </div>
+                              <div className={styles.row}>
+                                <div className={styles.col100}>
+                                  <Label>
+                                    Briefly comment on the Reviewee's top areas
+                                    for development with the RDTA principles.
+                                    Your comments should support, at minimum,
+                                    any 1 rating above.{" "}
+                                    <i>(Commentary required)</i>
+                                  </Label>
+                                  <TextField
+                                    resizable={false}
+                                    multiline={true}
+                                    value={
+                                      this.state.ProjectDetails.DevelopmentAreas
+                                    }
+                                    disabled={
+                                      this.state.ProjectDetails
+                                        .StatusOfReview ==
+                                        Config.Strings.Status_AwaitingLeadMD ||
+                                      this.state.ProjectDetails
+                                        .StatusOfReview ==
+                                        Config.Strings
+                                          .Status_AwaitingAcknowledgement ||
+                                      this.state.ProjectDetails
+                                        .StatusOfReview ==
+                                        Config.Strings.Status_Acknowledged
+                                    }
+                                    onChange={(e, newValue) => {
+                                      this.onChangeTextField(
+                                        "DevelopmentAreas",
+                                        newValue
+                                      );
+                                    }}
+                                  ></TextField>
+                                </div>
+                              </div>
+                              <div className={styles.row}>
+                                <div className={styles.col100}>
+                                  <Label>
+                                    Briefly comment on what RDTA skills are
+                                    necessary for the reviewee to continue to
+                                    develop in order to progress in their
+                                    career. <i>(Commentary required)</i>
+                                  </Label>
+                                  <TextField
+                                    resizable={false}
+                                    multiline={true}
+                                    disabled={
+                                      this.state.ProjectDetails
+                                        .StatusOfReview ==
+                                        Config.Strings.Status_AwaitingLeadMD ||
+                                      this.state.ProjectDetails
+                                        .StatusOfReview ==
+                                        Config.Strings
+                                          .Status_AwaitingAcknowledgement ||
+                                      this.state.ProjectDetails
+                                        .StatusOfReview ==
+                                        Config.Strings.Status_Acknowledged
+                                    }
+                                    value={
+                                      this.state.ProjectDetails.NeededSkills
+                                    }
+                                    onChange={(e, newValue) => {
+                                      this.onChangeTextField(
+                                        "NeededSkills",
+                                        newValue
+                                      );
+                                    }}
+                                  ></TextField>
+                                </div>
+                              </div>
+                              <div className={styles.row}>
+                                <div className={styles.col100}>
+                                  <Label>
+                                    Additional comments from Lead MD{" "}
+                                    <i>(optional)</i>
+                                  </Label>
+                                  <TextField
+                                    resizable={false}
+                                    multiline={true}
+                                    disabled={
+                                      this.state.ProjectDetails
+                                        .StatusOfReview !=
+                                      Config.Strings.Status_AwaitingLeadMD
+                                    }
+                                    value={
+                                      this.state.ProjectDetails.LeadMDComments
+                                    }
+                                    onChange={(e, newValue) => {
+                                      this.onChangeTextField(
+                                        "LeadMDComments",
+                                        newValue
+                                      );
+                                    }}
+                                  ></TextField>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                          <div className={styles.sectionContent}>
-                            <div className={styles.row}>
-                              <div className={styles.col100}>
-                                <Label>
-                                  Briefly comment on the Reviewee's top areas of
-                                  strong performance on this project and
-                                  following the RDTA principles. Your comments
-                                  should support, at minimum, any 4 ratings
-                                  above. <i>(Commentary required)</i>
-                                </Label>
-                                <TextField
-                                  resizable={false}
-                                  multiline={true}
-                                  value={
-                                    this.state.ProjectDetails.StrongPerformance
-                                  }
-                                  disabled={
-                                    this.state.ProjectDetails.StatusOfReview ==
-                                      Config.Strings.Status_AwaitingLeadMD ||
-                                    this.state.ProjectDetails.StatusOfReview ==
-                                      Config.Strings
-                                        .Status_AwaitingAcknowledgement ||
-                                    this.state.ProjectDetails.StatusOfReview ==
-                                      Config.Strings.Status_Acknowledged
-                                  }
-                                  onChange={(e, newValue) => {
-                                    this.onChangeTextField(
-                                      "StrongPerformance",
-                                      newValue
-                                    );
-                                  }}
-                                ></TextField>
-                              </div>
-                            </div>
-                            <div className={styles.row}>
-                              <div className={styles.col100}>
-                                <Label>
-                                  Briefly comment on the Reviewee's top areas
-                                  for development with the RDTA principles. Your
-                                  comments should support, at minimum, any 1
-                                  rating above. <i>(Commentary required)</i>
-                                </Label>
-                                <TextField
-                                  resizable={false}
-                                  multiline={true}
-                                  value={
-                                    this.state.ProjectDetails.DevelopmentAreas
-                                  }
-                                  disabled={
-                                    this.state.ProjectDetails.StatusOfReview ==
-                                      Config.Strings.Status_AwaitingLeadMD ||
-                                    this.state.ProjectDetails.StatusOfReview ==
-                                      Config.Strings
-                                        .Status_AwaitingAcknowledgement ||
-                                    this.state.ProjectDetails.StatusOfReview ==
-                                      Config.Strings.Status_Acknowledged
-                                  }
-                                  onChange={(e, newValue) => {
-                                    this.onChangeTextField(
-                                      "DevelopmentAreas",
-                                      newValue
-                                    );
-                                  }}
-                                ></TextField>
-                              </div>
-                            </div>
-                            <div className={styles.row}>
-                              <div className={styles.col100}>
-                                <Label>
-                                  Briefly comment on what RDTA skills are
-                                  necessary for the reviewee to continue to
-                                  develop in order to progress in their career.{" "}
-                                  <i>(Commentary required)</i>
-                                </Label>
-                                <TextField
-                                  resizable={false}
-                                  multiline={true}
-                                  disabled={
-                                    this.state.ProjectDetails.StatusOfReview ==
-                                      Config.Strings.Status_AwaitingLeadMD ||
-                                    this.state.ProjectDetails.StatusOfReview ==
-                                      Config.Strings
-                                        .Status_AwaitingAcknowledgement ||
-                                    this.state.ProjectDetails.StatusOfReview ==
-                                      Config.Strings.Status_Acknowledged
-                                  }
-                                  value={this.state.ProjectDetails.NeededSkills}
-                                  onChange={(e, newValue) => {
-                                    this.onChangeTextField(
-                                      "NeededSkills",
-                                      newValue
-                                    );
-                                  }}
-                                ></TextField>
-                              </div>
-                            </div>
-                            <div className={styles.row}>
-                              <div className={styles.col100}>
-                                <Label>
-                                  Additional comments from Lead MD{" "}
-                                  <i>(optional)</i>
-                                </Label>
-                                <TextField
-                                  resizable={false}
-                                  multiline={true}
-                                  disabled={
-                                    this.state.ProjectDetails.StatusOfReview !=
-                                    Config.Strings.Status_AwaitingLeadMD
-                                  }
-                                  value={
-                                    this.state.ProjectDetails.LeadMDComments
-                                  }
-                                  onChange={(e, newValue) => {
-                                    this.onChangeTextField(
-                                      "LeadMDComments",
-                                      newValue
-                                    );
-                                  }}
-                                ></TextField>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
 
-                        {
-                          // SECTION: Reviewee Approval - Visible only while Awaiting Reviewee Approvall
-                          this.state.ProjectDetails.StatusOfReview !=
-                            Config.Strings.Status_AwaitingReviewer &&
+                          {
+                            // SECTION: Reviewee Approval - Visible only while Awaiting Reviewee Approvall
                             this.state.ProjectDetails.StatusOfReview !=
-                              Config.Strings.Status_AwaitingLeadMD &&
-                            this.state.ProjectDetails.StatusOfReview !=
-                              Config.Strings.Status_AwaitingAcknowledgement &&
-                            this.state.ProjectDetails.StatusOfReview !=
-                              Config.Strings.Status_Acknowledged && (
+                              Config.Strings.Status_AwaitingReviewer &&
+                              this.state.ProjectDetails.StatusOfReview !=
+                                Config.Strings.Status_AwaitingLeadMD &&
+                              this.state.ProjectDetails.StatusOfReview !=
+                                Config.Strings.Status_AwaitingAcknowledgement &&
+                              this.state.ProjectDetails.StatusOfReview !=
+                                Config.Strings.Status_Acknowledged && (
+                                <div className={styles.sectionContainer}>
+                                  <div className={styles.sectionContent}>
+                                    <div className={styles.row}>
+                                      <div className={styles.col100}>
+                                        <b>REVIEWEE:</b> When your comments are
+                                        complete, click the Submit button below.
+                                        To identify a different Reviewer or Lead
+                                        MD to perform this review, change the
+                                        corresponding field(s) at the top of
+                                        this form before submitting. (Not ready
+                                        yet? You can <b>Save Draft</b> to
+                                        preserve your inputs prior to submitting
+                                        to the Reviewer.)
+                                      </div>
+                                    </div>
+                                    <div className={styles.row}>
+                                      <div className={styles.col100}>
+                                        <Stack
+                                          horizontal
+                                          tokens={stackTokens}
+                                          className={styles.stackCenter}
+                                        >
+                                          <PrimaryButton
+                                            text="SAVE DRAFT"
+                                            onClick={this.onSaveAsDraft}
+                                            disabled={
+                                              this.state.DisableSaveButton
+                                            }
+                                          ></PrimaryButton>
+                                          <PrimaryButton
+                                            text="SUBMIT TO REVIEWER FOR APPROVAL"
+                                            className={
+                                              !this.state.DisableSubmitButton
+                                                ? styles.btnApprovedForReviewerGreen
+                                                : ""
+                                            }
+                                            onClick={this.onSubmit}
+                                            disabled={
+                                              this.state.DisableSubmitButton
+                                            }
+                                          ></PrimaryButton>
+                                        </Stack>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              )
+                          }
+
+                          {
+                            // SECTION: Reviewer Approval - Visible only while Awaiting Reviewer
+                            this.state.OnlyVisibleForReviewer && (
                               <div className={styles.sectionContainer}>
                                 <div className={styles.sectionContent}>
                                   <div className={styles.row}>
                                     <div className={styles.col100}>
-                                      <b>REVIEWEE:</b> When your comments are
-                                      complete, click the Submit button below.
-                                      To identify a different Reviewer or Lead
-                                      MD to perform this review, change the
-                                      corresponding field(s) at the top of this
-                                      form before submitting. (Not ready yet?
-                                      You can <b>Save Draft</b> to preserve your
-                                      inputs prior to submitting to the
-                                      Reviewer.)
+                                      <b>REVIEWER:</b> When you are ready to
+                                      advance the review to the Lead MD, click
+                                      the Submit button below. Click Save Draft
+                                      to save and return later. To revert back
+                                      to the Reviewee, complete the gray section
+                                      below.
+                                      <br />
+                                      <b>
+                                        To substitute a different Reviewer in
+                                        this review,
+                                      </b>{" "}
+                                      enter the new name at the top of the form
+                                      and click <b>Replace Me.</b> Your current
+                                      inputs will be saved, and the review will
+                                      be assigned to the new person.
+                                      <br />
+                                      <b>To identify a new Lead MD,</b> change
+                                      the Lead MD name at the top of this form
+                                      and click either Save Draft or Submit.
                                     </div>
                                   </div>
                                   <div className={styles.row}>
@@ -2028,154 +2135,7 @@ export default class Projects extends React.Component<
                                           }
                                         ></PrimaryButton>
                                         <PrimaryButton
-                                          text="SUBMIT TO REVIEWER FOR APPROVAL"
-                                          className={
-                                            !this.state.DisableSubmitButton
-                                              ? styles.btnApprovedForReviewerGreen
-                                              : ""
-                                          }
-                                          onClick={this.onSubmit}
-                                          disabled={
-                                            this.state.DisableSubmitButton
-                                          }
-                                        ></PrimaryButton>
-                                      </Stack>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            )
-                        }
-
-                        {
-                          // SECTION: Reviewer Approval - Visible only while Awaiting Reviewer
-                          this.state.OnlyVisibleForReviewer && (
-                            <div className={styles.sectionContainer}>
-                              <div className={styles.sectionContent}>
-                                <div className={styles.row}>
-                                  <div className={styles.col100}>
-                                    <b>REVIEWER:</b> When you are ready to
-                                    advance the review to the Lead MD, click the
-                                    Submit button below. Click Save Draft to
-                                    save and return later. To revert back to the
-                                    Reviewee, complete the gray section below.
-                                    <br />
-                                    <b>
-                                      To substitute a different Reviewer in this
-                                      review,
-                                    </b>{" "}
-                                    enter the new name at the top of the form
-                                    and click <b>Replace Me.</b> Your current
-                                    inputs will be saved, and the review will be
-                                    assigned to the new person.
-                                    <br />
-                                    <b>To identify a new Lead MD,</b> change the
-                                    Lead MD name at the top of this form and
-                                    click either Save Draft or Submit.
-                                  </div>
-                                </div>
-                                <div className={styles.row}>
-                                  <div className={styles.col100}>
-                                    <Stack
-                                      horizontal
-                                      tokens={stackTokens}
-                                      className={styles.stackCenter}
-                                    >
-                                      <PrimaryButton
-                                        text="SAVE DRAFT"
-                                        onClick={this.onSaveAsDraft}
-                                        disabled={this.state.DisableSaveButton}
-                                      ></PrimaryButton>
-                                      <PrimaryButton
-                                        text="SUBMIT TO LEAD MD FOR APPROVAL"
-                                        className={
-                                          !this.state.DisableSubmitButton
-                                            ? styles.btnApprovedForReviewerGreen
-                                            : ""
-                                        }
-                                        onClick={this.onSubmit}
-                                        disabled={
-                                          this.state.DisableSubmitButton
-                                        }
-                                      ></PrimaryButton>
-                                    </Stack>
-                                  </div>
-                                </div>
-                                <div className={styles.Spacer}>&nbsp;</div>
-                                <div className={styles.row}>
-                                  <div className={styles.col75left}>
-                                    <label>
-                                      Optional Reversion Comment (visible)
-                                    </label>
-                                    <TextField
-                                      resizable={false}
-                                      multiline={false}
-                                      value={
-                                        this.state.ProjectDetails
-                                          .ReviewerReversionComments
-                                      }
-                                      onChange={(e, newValue) => {
-                                        this.onChangeTextField(
-                                          "ReviewerReversionComments",
-                                          newValue
-                                        );
-                                      }}
-                                    ></TextField>
-                                  </div>
-                                  <div className={styles.col25Right}>
-                                    <div className={styles.Spacer}>&nbsp;</div>
-                                    <PrimaryButton
-                                      text="REVERT TO REVIEWEE"
-                                      onClick={this.onRevert}
-                                      disabled={this.state.DisableRevertButton}
-                                    ></PrimaryButton>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          )
-                        }
-
-                        {
-                          // SECTION: Lead MD Approval - Visible only while Awaiting Lead MD Approval
-                          this.state.ProjectDetails.StatusOfReview !=
-                            Config.Strings.Status_AwaitingReviewee &&
-                            this.state.ProjectDetails.StatusOfReview !=
-                              Config.Strings.Status_AwaitingReviewer &&
-                            this.state.ProjectDetails.StatusOfReview !=
-                              Config.Strings.Status_AwaitingAcknowledgement &&
-                            this.state.ProjectDetails.StatusOfReview !=
-                              Config.Strings.Status_Acknowledged && (
-                              <div className={styles.sectionContainer}>
-                                <div className={styles.sectionContent}>
-                                  <div className={styles.row}>
-                                    <div className={styles.col100}>
-                                      <b>LEAD MD:</b> Review the form. Add any
-                                      optional comments in the text area above.
-                                      When you are satisfied, click the Submit
-                                      button below. Alternately, you could
-                                      choose to revert to the Reviewer for more
-                                      changes. Complete the gray section below.
-                                      <br />
-                                      <b>
-                                        To substitute a different Lead MD in
-                                        this review,
-                                      </b>{" "}
-                                      enter the new name at the top of the form
-                                      and click <b>Replace Me</b>. Your current
-                                      inputs will be saved, and the review will
-                                      be assigned to the new person.
-                                    </div>
-                                  </div>
-                                  <div className={styles.row}>
-                                    <div className={styles.col100}>
-                                      <Stack
-                                        horizontal
-                                        tokens={stackTokens}
-                                        className={styles.stackCenter}
-                                      >
-                                        <PrimaryButton
-                                          text="SUBMIT TO REVIEWEE FOR ACKNOWLEDGEMENT"
+                                          text="SUBMIT TO LEAD MD FOR APPROVAL"
                                           className={
                                             !this.state.DisableSubmitButton
                                               ? styles.btnApprovedForReviewerGreen
@@ -2200,11 +2160,11 @@ export default class Projects extends React.Component<
                                         multiline={false}
                                         value={
                                           this.state.ProjectDetails
-                                            .LeadMDReversionComments
+                                            .ReviewerReversionComments
                                         }
                                         onChange={(e, newValue) => {
                                           this.onChangeTextField(
-                                            "LeadMDReversionComments",
+                                            "ReviewerReversionComments",
                                             newValue
                                           );
                                         }}
@@ -2215,7 +2175,7 @@ export default class Projects extends React.Component<
                                         &nbsp;
                                       </div>
                                       <PrimaryButton
-                                        text="REVERT TO REVIEWER"
+                                        text="REVERT TO REVIEWEE"
                                         onClick={this.onRevert}
                                         disabled={
                                           this.state.DisableRevertButton
@@ -2226,48 +2186,41 @@ export default class Projects extends React.Component<
                                 </div>
                               </div>
                             )
-                        }
-                        {
-                          // SECTION: Reviewee Acknowledgement Comments - Visible only after Lead MD approval
-                          this.state.ProjectDetails.StatusOfReview !=
-                            Config.Strings.Status_AwaitingReviewee &&
+                          }
+
+                          {
+                            // SECTION: Lead MD Approval - Visible only while Awaiting Lead MD Approval
                             this.state.ProjectDetails.StatusOfReview !=
-                              Config.Strings.Status_AwaitingReviewer &&
-                            this.state.ProjectDetails.StatusOfReview !=
-                              Config.Strings.Status_AwaitingLeadMD && (
-                              <div className={styles.sectionContainer}>
-                                <div className={styles.sectionContent}>
-                                  <div className={styles.row}>
-                                    <div className={styles.col100}>
-                                      <b>REVIEWEE ACKNOWLEDGEMENT COMMENTS</b>{" "}
-                                      (Comments are optional and visible.)
+                              Config.Strings.Status_AwaitingReviewee &&
+                              this.state.ProjectDetails.StatusOfReview !=
+                                Config.Strings.Status_AwaitingReviewer &&
+                              this.state.ProjectDetails.StatusOfReview !=
+                                Config.Strings.Status_AwaitingAcknowledgement &&
+                              this.state.ProjectDetails.StatusOfReview !=
+                                Config.Strings.Status_Acknowledged && (
+                                <div className={styles.sectionContainer}>
+                                  <div className={styles.sectionContent}>
+                                    <div className={styles.row}>
+                                      <div className={styles.col100}>
+                                        <b>LEAD MD:</b> Review the form. Add any
+                                        optional comments in the text area
+                                        above. When you are satisfied, click the
+                                        Submit button below. Alternately, you
+                                        could choose to revert to the Reviewer
+                                        for more changes. Complete the gray
+                                        section below.
+                                        <br />
+                                        <b>
+                                          To substitute a different Lead MD in
+                                          this review,
+                                        </b>{" "}
+                                        enter the new name at the top of the
+                                        form and click <b>Replace Me</b>. Your
+                                        current inputs will be saved, and the
+                                        review will be assigned to the new
+                                        person.
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div className={styles.row}>
-                                    <div className={styles.col100}>
-                                      <TextField
-                                        resizable={false}
-                                        multiline={false}
-                                        disabled={
-                                          this.state.ProjectDetails
-                                            .StatusOfReview ==
-                                          Config.Strings.Status_Acknowledged
-                                        }
-                                        value={
-                                          this.state.ProjectDetails
-                                            .AcknowledgementComments
-                                        }
-                                        onChange={(e, newValue) => {
-                                          this.onChangeTextField(
-                                            "AcknowledgementComments",
-                                            newValue
-                                          );
-                                        }}
-                                      ></TextField>
-                                    </div>
-                                  </div>
-                                  {this.state.ProjectDetails.StatusOfReview !=
-                                    Config.Strings.Status_Acknowledged && (
                                     <div className={styles.row}>
                                       <div className={styles.col100}>
                                         <Stack
@@ -2276,14 +2229,12 @@ export default class Projects extends React.Component<
                                           className={styles.stackCenter}
                                         >
                                           <PrimaryButton
-                                            text="SAVE DRAFT"
-                                            onClick={this.onSaveAsDraft}
-                                            disabled={
-                                              this.state.DisableSaveButton
+                                            text="SUBMIT TO REVIEWEE FOR ACKNOWLEDGEMENT"
+                                            className={
+                                              !this.state.DisableSubmitButton
+                                                ? styles.btnApprovedForReviewerGreen
+                                                : ""
                                             }
-                                          ></PrimaryButton>
-                                          <PrimaryButton
-                                            text="SUBMIT FINAL REVIEW"
                                             onClick={this.onSubmit}
                                             disabled={
                                               this.state.DisableSubmitButton
@@ -2292,73 +2243,179 @@ export default class Projects extends React.Component<
                                         </Stack>
                                       </div>
                                     </div>
-                                  )}
+                                    <div className={styles.Spacer}>&nbsp;</div>
+                                    <div className={styles.row}>
+                                      <div className={styles.col75left}>
+                                        <label>
+                                          Optional Reversion Comment (visible)
+                                        </label>
+                                        <TextField
+                                          resizable={false}
+                                          multiline={false}
+                                          value={
+                                            this.state.ProjectDetails
+                                              .LeadMDReversionComments
+                                          }
+                                          onChange={(e, newValue) => {
+                                            this.onChangeTextField(
+                                              "LeadMDReversionComments",
+                                              newValue
+                                            );
+                                          }}
+                                        ></TextField>
+                                      </div>
+                                      <div className={styles.col25Right}>
+                                        <div className={styles.Spacer}>
+                                          &nbsp;
+                                        </div>
+                                        <PrimaryButton
+                                          text="REVERT TO REVIEWER"
+                                          onClick={this.onRevert}
+                                          disabled={
+                                            this.state.DisableRevertButton
+                                          }
+                                        ></PrimaryButton>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              )
+                          }
+                          {
+                            // SECTION: Reviewee Acknowledgement Comments - Visible only after Lead MD approval
+                            this.state.ProjectDetails.StatusOfReview !=
+                              Config.Strings.Status_AwaitingReviewee &&
+                              this.state.ProjectDetails.StatusOfReview !=
+                                Config.Strings.Status_AwaitingReviewer &&
+                              this.state.ProjectDetails.StatusOfReview !=
+                                Config.Strings.Status_AwaitingLeadMD && (
+                                <div className={styles.sectionContainer}>
+                                  <div className={styles.sectionContent}>
+                                    <div className={styles.row}>
+                                      <div className={styles.col100}>
+                                        <b>REVIEWEE ACKNOWLEDGEMENT COMMENTS</b>{" "}
+                                        (Comments are optional and visible.)
+                                      </div>
+                                    </div>
+                                    <div className={styles.row}>
+                                      <div className={styles.col100}>
+                                        <TextField
+                                          resizable={false}
+                                          multiline={false}
+                                          disabled={
+                                            this.state.ProjectDetails
+                                              .StatusOfReview ==
+                                            Config.Strings.Status_Acknowledged
+                                          }
+                                          value={
+                                            this.state.ProjectDetails
+                                              .AcknowledgementComments
+                                          }
+                                          onChange={(e, newValue) => {
+                                            this.onChangeTextField(
+                                              "AcknowledgementComments",
+                                              newValue
+                                            );
+                                          }}
+                                        ></TextField>
+                                      </div>
+                                    </div>
+                                    {this.state.ProjectDetails.StatusOfReview !=
+                                      Config.Strings.Status_Acknowledged && (
+                                      <div className={styles.row}>
+                                        <div className={styles.col100}>
+                                          <Stack
+                                            horizontal
+                                            tokens={stackTokens}
+                                            className={styles.stackCenter}
+                                          >
+                                            <PrimaryButton
+                                              text="SAVE DRAFT"
+                                              onClick={this.onSaveAsDraft}
+                                              disabled={
+                                                this.state.DisableSaveButton
+                                              }
+                                            ></PrimaryButton>
+                                            <PrimaryButton
+                                              text="SUBMIT FINAL REVIEW"
+                                              onClick={this.onSubmit}
+                                              disabled={
+                                                this.state.DisableSubmitButton
+                                              }
+                                            ></PrimaryButton>
+                                          </Stack>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              )
+                          }
+
+                          <div className={styles.sectionContainer}>
+                            <div className={styles.sectionContent}>
+                              <div className={styles.row}>
+                                <div className={styles.col100}>
+                                  <label>Signoff History</label>
                                 </div>
                               </div>
-                            )
-                        }
-
-                        <div className={styles.sectionContainer}>
-                          <div className={styles.sectionContent}>
-                            <div className={styles.row}>
-                              <div className={styles.col100}>
-                                <label>Signoff History</label>
-                              </div>
-                            </div>
-                            <div className={styles.row}>
-                              <div className={styles.col100}>
-                                <TextField
-                                  resizable={false}
-                                  multiline={true}
-                                  readOnly={true}
-                                  value={
-                                    this.state.ProjectDetails.SignoffHistory
-                                  }
-                                ></TextField>
+                              <div className={styles.row}>
+                                <div className={styles.col100}>
+                                  <TextField
+                                    resizable={false}
+                                    multiline={true}
+                                    readOnly={true}
+                                    value={
+                                      this.state.ProjectDetails.SignoffHistory
+                                    }
+                                  ></TextField>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
 
-                        <div className={styles.row}>
-                          <div className={styles.col100right}>
-                            <div className={styles.Spacer}>&nbsp;</div>
-                            <PrimaryButton
-                              text="Close"
-                              onClick={this.onCancel}
-                            ></PrimaryButton>
+                          <div className={styles.row}>
+                            <div className={styles.col100right}>
+                              <div className={styles.Spacer}>&nbsp;</div>
+                              <PrimaryButton
+                                text="Close"
+                                onClick={this.onCancel}
+                              ></PrimaryButton>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )}
-                    {(this.state.ProjectDetails.ServiceLine ==
-                      "Data Intelligence Gateway" ||
-                      this.state.ProjectDetails.ServiceLine ==
-                        "data intelligence gateway") && (
-                      <div>
-                        <DIGForm
-                          ItemID={this.props.ItemID}
-                          AppContext={this.props.AppContext}
-                          hasEditItemPermission={this.hasEditItemPermission}
-                          IsLoading={this.state.IsLoading}
-                          CurrentUserRoles={this.state.CurrentUserRoles}
-                          ProjectDetails={this.state.ProjectDetails}
-                          DisableSaveButton={this.state.DisableSaveButton}
-                          DisableSubmitButton={this.state.DisableSubmitButton}
-                          DisableRevertButton={this.state.DisableRevertButton}
-                          OnlyEnableForReviewer={
-                            this.state.OnlyEnableForReviewer
-                          }
-                          OnlyVisibleForReviewer={
-                            this.state.OnlyVisibleForReviewer
-                          }
-                        ></DIGForm>
-                      </div>
-                    )}
-                  </div>
-                )
-              }
-            </div>
+                      )}
+                      {(this.state.ProjectDetails.ServiceLine ==
+                        "Data Intelligence Gateway" ||
+                        this.state.ProjectDetails.ServiceLine ==
+                          "data intelligence gateway") && (
+                        <div>
+                          <DIGForm
+                            ItemID={this.props.ItemID}
+                            AppContext={this.props.AppContext}
+                            hasEditItemPermission={this.hasEditItemPermission}
+                            IsLoading={this.state.IsLoading}
+                            CurrentUserRoles={this.state.CurrentUserRoles}
+                            ProjectDetails={this.state.ProjectDetails}
+                            DisableSaveButton={this.state.DisableSaveButton}
+                            DisableSubmitButton={this.state.DisableSubmitButton}
+                            DisableRevertButton={this.state.DisableRevertButton}
+                            OnlyEnableForReviewer={
+                              this.state.OnlyEnableForReviewer
+                            }
+                            OnlyVisibleForReviewer={
+                              this.state.OnlyVisibleForReviewer
+                            }
+                          ></DIGForm>
+                        </div>
+                      )}
+                    </div>
+                  )
+                }
+              </div>
+            </>
+          ) : (
+            <Spinner size={SpinnerSize.large} />
           )}
         </div>
       </div>

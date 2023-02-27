@@ -148,7 +148,22 @@ export default class MapCAMLResult extends ContextService {
     result.ReviewerReversionComments =
       item[Columns["Reviewer Reversion Comments"]];
     result.ServiceLine = item[Columns["Service Line"]];
-    result.SignoffHistory = item[Columns["Signoff History"]];
+
+    let SignoffHistory = item[Columns["Signoff History"]]
+      ? item[Columns["Signoff History"]].replace("&#58;", ":").split(";")
+      : "";
+    let html = "";
+    for (var i = 0; i < Object.keys(SignoffHistory).length; i++) {
+      if (SignoffHistory[Object.keys(SignoffHistory)[i]] != " ") {
+        html +=
+          SignoffHistory[Object.keys(SignoffHistory)[i]].replace(
+            /<[^>]*>/g,
+            ""
+          ) + "\n";
+      }
+    }
+    result.SignoffHistory = html;
+    // result.SignoffHistory = item[Columns["Signoff History"]];
     result.StatusOfReview = item[Columns["Status of Review"]];
     result.StrongPerformance = item[Columns["Strong Performance"]];
     result.Submitted = item[Columns.Submitted];
