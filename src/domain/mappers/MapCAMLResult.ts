@@ -150,15 +150,16 @@ export default class MapCAMLResult extends ContextService {
     result.ServiceLine = item[Columns["Service Line"]];
 
     let SignoffHistory = item[Columns["Signoff History"]]
-      ? item[Columns["Signoff History"]].split(")")
+      ? item[Columns["Signoff History"]].replaceAll(";", "").split(")")
       : "";
     let html = "";
     for (var i = 0; i < Object.keys(SignoffHistory).length; i++) {
-      if (SignoffHistory[Object.keys(SignoffHistory)[i]] != "") {
-        html +=
-          SignoffHistory[Object.keys(SignoffHistory)[i]]
-            .replace(";", "")
-            .trim() + ")\n";
+      if (
+        SignoffHistory[Object.keys(SignoffHistory)[i]] &&
+        // SignoffHistory[Object.keys(SignoffHistory)[i]] != "" &&
+        SignoffHistory[Object.keys(SignoffHistory)[i]] != "\n"
+      ) {
+        html += SignoffHistory[Object.keys(SignoffHistory)[i]].trim() + ")\n";
       }
     }
     result.SignoffHistory = html;
