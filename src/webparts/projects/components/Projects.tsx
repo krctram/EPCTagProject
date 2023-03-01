@@ -554,26 +554,25 @@ export default class Projects extends React.Component<
 
   // Redirect user to 'Employee Summary' Listing page
   private gotoListPage() {
+    let currentStatusOfReview = this.state.ProjectDetails.StatusOfReview;
     let result =
       this.props.AppContext.pageContext.web.absoluteUrl +
       Config.Links.RevieweeLink;
-    let currentStatusOfReview = this.state.ProjectDetails.StatusOfReview;
-
     switch (currentStatusOfReview) {
       case Config.Strings.Status_AwaitingReviewee:
         result =
           this.props.AppContext.pageContext.web.absoluteUrl +
-          Config.Links.RevieweeLink; // Reviewee Approved/Responded
+          Config.Links.ReviewerLink; // Reviewee Approved/Responded
         break;
       case Config.Strings.Status_AwaitingReviewer:
         result =
           this.props.AppContext.pageContext.web.absoluteUrl +
-          Config.Links.ReviewerLink; // Reviewer Approved
+          Config.Links.LeadMDLink; // Reviewer Approved
         break;
       case Config.Strings.Status_AwaitingLeadMD:
         result =
           this.props.AppContext.pageContext.web.absoluteUrl +
-          Config.Links.LeadMDLink; // Lead MD Approved
+          Config.Links.ProjectsListAllItems; // Lead MD Approved
         break;
       case Config.Strings.Status_AwaitingAcknowledgement:
         result =
