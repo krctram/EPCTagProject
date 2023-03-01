@@ -941,6 +941,7 @@ export default class Projects extends React.Component<
     ];
 
     const serviceLineOptions: IDropdownOption[] = [
+      { key: "", text: "" },
       { key: "Financial Due Diligence", text: "Financial Due Diligence" },
       {
         key: "Global Transaction Analytics",
@@ -1041,7 +1042,8 @@ export default class Projects extends React.Component<
                           }}
                         >
                           <div className={styles.lblRightTitle}>
-                            Service Line :
+                            Service Line
+                            <span className={styles.inRed}> * </span>:
                           </div>
                           <div
                             style={{
