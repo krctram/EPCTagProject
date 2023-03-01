@@ -156,7 +156,7 @@ export default class MapCAMLResult extends ContextService {
     for (var i = 0; i < Object.keys(SignoffHistory).length; i++) {
       if (
         SignoffHistory[Object.keys(SignoffHistory)[i]] &&
-        // SignoffHistory[Object.keys(SignoffHistory)[i]] != "" &&
+        SignoffHistory[Object.keys(SignoffHistory)[i]].trim() != "" &&
         SignoffHistory[Object.keys(SignoffHistory)[i]] != "\n"
       ) {
         html += SignoffHistory[Object.keys(SignoffHistory)[i]].trim() + ")\n";
