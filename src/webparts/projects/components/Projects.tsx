@@ -155,7 +155,7 @@ export default class Projects extends React.Component<
     questionDetails = questionDetails.filter((arr) => {
       return arr.ServiceLine == data.ServiceLine;
     });
-    if (questionDetails) {
+    if (questionDetails.length > 0) {
       QuestionArr.map((i) => {
         tempProject["Q" + i + "Category"] =
           questionDetails[0]["Q" + i + "Category"];
@@ -177,6 +177,11 @@ export default class Projects extends React.Component<
         // }
       });
 
+      this.setState({
+        IsLoading: false,
+        ProjectDetails: tempProject,
+      });
+    } else {
       this.setState({
         IsLoading: false,
         ProjectDetails: tempProject,
