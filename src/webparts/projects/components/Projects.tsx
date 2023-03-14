@@ -577,7 +577,8 @@ export default class Projects extends React.Component<
       case Config.Strings.Status_AwaitingLeadMD:
         result =
           this.props.AppContext.pageContext.web.absoluteUrl +
-          Config.Links.ProjectsListAllItems; // Lead MD Approved
+          // Config.Links.ProjectsListAllItems; // Lead MD Approved
+          Config.Links.HomePageLink;
         break;
       case Config.Strings.Status_AwaitingAcknowledgement:
         result =

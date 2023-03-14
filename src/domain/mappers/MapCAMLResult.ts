@@ -150,7 +150,11 @@ export default class MapCAMLResult extends ContextService {
     result.ServiceLine = item[Columns["Service Line"]];
 
     let SignoffHistory = item[Columns["Signoff History"]]
-      ? item[Columns["Signoff History"]].replaceAll(";", "").split(")")
+      ? item[Columns["Signoff History"]]
+          .replace(/<[^>]*>/g, "")
+          .replaceAll("&#58;", ":")
+          .replaceAll(";", "")
+          .split(")")
       : "";
     let html = "";
     for (var i = 0; i < Object.keys(SignoffHistory).length; i++) {
