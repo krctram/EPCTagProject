@@ -474,6 +474,10 @@ export default class Projects extends React.Component<
     data[columns["Status of Review"]] = projectDetails.StatusOfReview;
     data[columns.Submitted] = projectDetails.Submitted;
 
+    // ContentType - TAG Employee
+    data["ContentTypeId"] =
+      "0x0100632AB58492E4E44FB1DA1F844F6346AB00EC81959E6ACFF8489A8CBBAEC10CF7C2";
+
     // Only for Replace Me
     if (
       projectDetails.SubstituteUser.Id &&
