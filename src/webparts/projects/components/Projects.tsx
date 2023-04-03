@@ -121,7 +121,6 @@ export default class Projects extends React.Component<
       const visibleForReviewer: boolean =
         projectDetails.StatusOfReview == Config.Strings.Status_AwaitingReviewer;
 
-      debugger;
       this.ProjectDetails(projectDetails);
       this.setState({
         IsLoading: false,
@@ -138,9 +137,21 @@ export default class Projects extends React.Component<
 
   //#region "Control Change Events"
 
-  private async ProjectDetails(data) {
+  private async ProjectDetails(data: any) {
     let tempProject = data;
-    let camlFilterConditions = `<Where><Eq><FieldRef Name='Title'/><Value Type='Text'>${data.JobTitle}</Value></Eq></Where>`;
+
+    /* Deva changes start */
+    let TempJobTitle: string = "";
+    if (data.JobTitle == "Manager I") {
+      TempJobTitle = "Manager";
+    } else if (data.JobTitle == "Director II") {
+      TempJobTitle = "Director";
+    } else {
+      TempJobTitle = data.JobTitle;
+    }
+    let camlFilterConditions = `<Where><Eq><FieldRef Name='Title'/><Value Type='Text'>${TempJobTitle}</Value></Eq></Where>`;
+    /* Deva changes end */
+
     this.listItemService = new ListItemService(
       this.props.AppContext,
       Config.ListNames.QuestionText
