@@ -1,20 +1,30 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
-  "solution": {
-    "name": "TAG-Projects-client-side-solution",
-    "id": "a04aa1b9-3716-4e59-b42a-4a10a0b21532",
-    "version": "1.0.0.20",
-    "includeClientSideAssets": true,
-    "isDomainIsolated": false,
-    "developer": {
-      "name": "",
-      "websiteUrl": "",
-      "privacyUrl": "",
-      "termsOfUseUrl": "",
-      "mpnId": ""
+    "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+    "solution": {
+        "name": "DEV-TAG-Projects-client-side-solution",
+        "id": "a04aa1b9-3716-4e59-b42a-4a10a0b21532",
+        "version": "1.0.0.20",
+        "includeClientSideAssets": true,
+        "isDomainIsolated": false,
+        "developer": {
+            "name": "",
+            "websiteUrl": "",
+            "privacyUrl": "",
+            "termsOfUseUrl": "",
+            "mpnId": ""
+        }
+    },
+    "paths": {
+        "zippedPackage": "solution/DEV-TAG-Projects.sppkg"
     }
-  },
-  "paths": {
-    "zippedPackage": "solution/TAG-Projects.sppkg"
-  }
 }
+
+/*
+solution:-
+  TAG-Projects => TAG-Projects-client-side-solution
+  DEV-TAG-Projects => DEV-TAG-Projects-client-side-solution
+
+zippedPackage:-
+  TAG-Projects => solution/TAG-Projects.sppkg
+  DEV-TAG-Projects => solution/DEV-TAG-Projects.sppkg
+*/
