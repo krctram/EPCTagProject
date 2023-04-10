@@ -973,6 +973,10 @@ export default class Projects extends React.Component<
         text: "Capital Markets & Accounting Advisory",
       },
       { key: "Data Intelligence Gateway", text: "Data Intelligence Gateway" },
+      {
+        key: "ESG",
+        text: "ESG",
+      },
     ];
 
     // const questionChoices: IDropdownOption[] = [
